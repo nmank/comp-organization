@@ -200,7 +200,7 @@ int logicalShift(int x, int n) {
   int ofst = n;
   int shft = x >> ofst;
   //making jah mask
-  int msk = ((1 << 31)>>ofst) | ((!(~ofst+1))<<31);
+  int msk = (~1) << (32+(~n));
   //use the and function as in getByte
   int result = msk & shft;
   return result;

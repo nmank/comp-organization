@@ -5,6 +5,9 @@ Nathan Mankovich
 Linked list.h file (has the node struct)
 */
 
+#indef LINKED_LIST_H
+#define LINKED_LIST_H
+
 typedef struct ll_node_s ll_node_t;
 typedef ll_node_t *ll_node_p;
 
@@ -19,3 +22,7 @@ struct ll_node_s
 
 ll_node_p ll_add_front(ll_node_p n, float x);
 void ll_free(ll_node_p n);
+ll_node_p ll_rev_copy(ll_node_p n);
+ll_node_p ll_rev(ll_node_p n);
+
+#endif
