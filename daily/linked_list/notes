@@ -1,0 +1,13 @@
+typedef struct ll_node_s ll_node_t;
+typedef ll_node_t *ll_node_p;
+
+
+struct ll_node_s
+{
+	//tree_t *left, *right;
+	//struct tree_s *left *right;
+	ll_node_p next;
+	float data;
+};
+
+ll_node_p ll_add_front(ll_node_p, float );
