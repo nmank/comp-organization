@@ -5,7 +5,7 @@ Nathan Mankovich
 Linked list.h file (has the node struct)
 */
 
-#indef LINKED_LIST_H
+#ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
 typedef struct ll_node_s ll_node_t;

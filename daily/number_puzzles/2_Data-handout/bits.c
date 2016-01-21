@@ -182,8 +182,11 @@ int bitAnd(int x, int y) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
+  //offset by 3 which is the same as multplying n by 2^3 = 8
   int ofst = n << 3;
+  //now shift x
   int shft = x >> ofst;
+  //then take the first two bits using an and mask
   int msk = 0Xff;
   int result = msk & shft;
   return result;
@@ -198,10 +201,12 @@ int getByte(int x, int n) {
  */
 int logicalShift(int x, int n) {
   int ofst = n;
+  //offset
   int shft = x >> ofst;
   //making jah mask
-  int msk = (~1) << (32+(~n));
-  //use the and function as in getByte
+  int msk = (~1) << (32+(~ofst));
+  msk = ~msk;
+  //use the and mask to isolate the shifted bits that "count"
   int result = msk & shft;
   return result;
 }
@@ -213,7 +218,46 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  return 1;
+  //easy
+  /*
+    int i, c = 0;
+    for( i = 0; i < 32; ++i )
+    {
+      c += (x>>i)&1;
+    }
+    return c;
+  */
+  //the right way:
+  /*
+  int m = 0x55;
+  m = m | (m<<8);
+  m = m | (m<<16);
+
+  int mx1 = m & x;
+  int mx2 = m & (x>>1)+(1<<31)
+
+  int added = mx1 + mx2;
+
+  int msk = 0xff;
+
+  int b0 = x & msk;
+
+  int ofst1 = 1 << 3;
+  int shft1 = added >> ofst1;
+  int b1 = msk & shft1;
+
+  int ofst2 = 2 << 3;
+  int shft2 = added >> ofst2;
+  int b2 = msk & shft2;
+
+  int ofst3 = 3 << 3;
+  int shft3 = added >> ofst3;
+  int b3 = msk & shft3;
+
+  int result = b0+b1+b2+b3;
+  */
+
+  return 2;
 }
 /* 
  * bang - Compute !x without using !
@@ -244,9 +288,11 @@ int tmin(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-
-  //int result = (!x) + pres;
-  return 2;
+  int msk = (~0)<<(n + ~0);
+  int pos_chk = msk & x;
+  int neg_chk = (msk ^ x) & msk;
+  int result = !pos_chk + !neg_chk;
+  return result;
 }
 /* 
  * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
@@ -307,7 +353,34 @@ int isPositive(int x) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+  //check if x is negative and y is positive
+  //first bit 1 if diff, 0 if same
+  int xor = x ^ y;
+  //first bit 1 if x neg, y pos
+  //first bit zero x pos, y neg and if same
+  int x_xor = x & xor;
+
+  //one if x greater than y
+  int y_xor = y & xor;
+
+  //check if it is ox80000000
+  int ox8 = 1<<31;
+  int chk0x8 = !(ox8 ^ x);
+
+  //check if same
+  int same = !xor;
+
+  //subtract x from y
+  int subt = y + (~x+1);
+  //shift over 31
+  int shft = subt >> 31;
+  //and mask for jah first digit
+  int msk = shft & 1;
+
+  //deal with zero
+  int result = chk0x8 | ((same | ((msk + (!x)) | x_xor)) & (~y_xor));
+
+  return result;
 }
 /*
  * ilog2 - return floor(log base 2 of x), where x > 0
@@ -331,7 +404,22 @@ int ilog2(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
- return 2;
+  int m = 1<<31;
+  int result = ((uf ^ m) & m) | (~m & uf);
+  
+  //dealing with NaN case
+  int F_mask = ~((~0)<<23);
+  int F = uf & F_mask;
+  int E_mask = 0xff<<23;
+  int uf_E = (~0) ^ uf;
+  int E = !(uf_E & E_mask);
+
+  if (F && E)
+  {
+    return uf;
+  }
+
+  return result;
 }
 /* 
  * float_i2f - Return bit-level equivalent of expression (float) x
@@ -343,7 +431,50 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_i2f(int x) {
-  return 2;
+  //this does not work
+  int i = 30;
+  int ch = 1;
+  int mask;
+  while (ch && i>=0) 
+  {
+    mask = 1<<i;
+    ch = !(mask & x);
+    i = i + (~0);
+  }
+  int first_bit = 31 +(~i+1);
+  int E = (127 + first_bit)<<23;
+
+  int F = x << (23 + (~first_bit + 1));
+
+  int S = x & (1<<31);
+
+  int result = S | E | F;
+
+  return result;
+
+  /*
+  *NOTES:
+  things we want to know:
+    sign
+    ax = make x positive (special case: -smallest = smallest)
+    take care of the zero case using an if statement
+    while loop:
+      we shift ax left 1 bit and until we hit a one in the furthest left position
+      we are decrementing the exponent every shift
+    observations:
+      now we have 31st bit at the most significant bit
+      bits 8-30 are tentative fraction
+      bits 0-7 require rounting
+    mask 
+      ***NOT FINISHED
+    eventually pipe all the shit together
+
+    unsigned uf;
+    unsigned f = uf & 0x007fffff;
+    f = (1<<23) | f;
+    unsigned e = (uf & 0x7f800000) >> 22 or 23;
+    if (e - bias) - 22 or 23 is the amount to shift f left to right to get the right result
+  */
 }
 /* 
  * float_twice - Return bit-level equivalent of expression 2*f for
