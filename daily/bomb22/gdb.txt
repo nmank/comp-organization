@@ -1,0 +1,1045 @@
+Argument required (filename to set it to.).
+Breakpoint 4 at 0x401681
+Continuing.
+
+Breakpoint 4, 0x0000000000401681 in read_six_numbers ()
+Dump of assembler code for function read_six_numbers:
+   0x0000000000401653 <+0>:	sub    $0x18,%rsp
+   0x0000000000401657 <+4>:	mov    %rsi,%rdx
+   0x000000000040165a <+7>:	lea    0x4(%rsi),%rcx
+   0x000000000040165e <+11>:	lea    0x14(%rsi),%rax
+   0x0000000000401662 <+15>:	mov    %rax,0x8(%rsp)
+   0x0000000000401667 <+20>:	lea    0x10(%rsi),%rax
+   0x000000000040166b <+24>:	mov    %rax,(%rsp)
+   0x000000000040166f <+28>:	lea    0xc(%rsi),%r9
+   0x0000000000401673 <+32>:	lea    0x8(%rsi),%r8
+   0x0000000000401677 <+36>:	mov    $0x4028d9,%esi
+   0x000000000040167c <+41>:	mov    $0x0,%eax
+=> 0x0000000000401681 <+46>:	callq  0x400c70 <__isoc99_sscanf@plt>
+   0x0000000000401686 <+51>:	cmp    $0x5,%eax
+   0x0000000000401689 <+54>:	jg     0x401690 <read_six_numbers+61>
+   0x000000000040168b <+56>:	callq  0x40161d <explode_bomb>
+   0x0000000000401690 <+61>:	add    $0x18,%rsp
+   0x0000000000401694 <+65>:	retq   
+End of assembler dump.
+0x0000000000400c70 in __isoc99_sscanf@plt ()
+Dump of assembler code for function __isoc99_sscanf@plt:
+=> 0x0000000000400c70 <+0>:	jmpq   *0x203432(%rip)        # 0x6040a8 <__isoc99_sscanf@got.plt>
+   0x0000000000400c76 <+6>:	pushq  $0x12
+   0x0000000000400c7b <+11>:	jmpq   0x400b40
+End of assembler dump.
+__isoc99_sscanf (s=0x604810 <input_strings+80> "6", 
+    format=0x4028d9 "%d %d %d %d %d %d") at isoc99_sscanf.c:26
+26	isoc99_sscanf.c: No such file or directory.
+Dump of assembler code for function __isoc99_sscanf:
+=> 0x00007ffff7a73450 <+0>:	sub    $0xd8,%rsp
+   0x00007ffff7a73457 <+7>:	test   %al,%al
+   0x00007ffff7a73459 <+9>:	mov    %rdx,0x30(%rsp)
+   0x00007ffff7a7345e <+14>:	mov    %rcx,0x38(%rsp)
+   0x00007ffff7a73463 <+19>:	mov    %r8,0x40(%rsp)
+   0x00007ffff7a73468 <+24>:	mov    %r9,0x48(%rsp)
+   0x00007ffff7a7346d <+29>:	je     0x7ffff7a734a6 <__isoc99_sscanf+86>
+   0x00007ffff7a7346f <+31>:	movaps %xmm0,0x50(%rsp)
+   0x00007ffff7a73474 <+36>:	movaps %xmm1,0x60(%rsp)
+   0x00007ffff7a73479 <+41>:	movaps %xmm2,0x70(%rsp)
+   0x00007ffff7a7347e <+46>:	movaps %xmm3,0x80(%rsp)
+   0x00007ffff7a73486 <+54>:	movaps %xmm4,0x90(%rsp)
+   0x00007ffff7a7348e <+62>:	movaps %xmm5,0xa0(%rsp)
+   0x00007ffff7a73496 <+70>:	movaps %xmm6,0xb0(%rsp)
+   0x00007ffff7a7349e <+78>:	movaps %xmm7,0xc0(%rsp)
+   0x00007ffff7a734a6 <+86>:	lea    0xe0(%rsp),%rax
+   0x00007ffff7a734ae <+94>:	lea    0x8(%rsp),%rdx
+   0x00007ffff7a734b3 <+99>:	mov    %rax,0x10(%rsp)
+   0x00007ffff7a734b8 <+104>:	lea    0x20(%rsp),%rax
+   0x00007ffff7a734bd <+109>:	movl   $0x10,0x8(%rsp)
+   0x00007ffff7a734c5 <+117>:	movl   $0x30,0xc(%rsp)
+   0x00007ffff7a734cd <+125>:	mov    %rax,0x18(%rsp)
+   0x00007ffff7a734d2 <+130>:	callq  0x7ffff7a734e0 <__GI___isoc99_vsscanf>
+   0x00007ffff7a734d7 <+135>:	add    $0xd8,%rsp
+   0x00007ffff7a734de <+142>:	retq   
+End of assembler dump.
+Breakpoint 5 at 0x7ffff7a7346d: file isoc99_sscanf.c, line 26.
+Continuing.
+
+Breakpoint 5, 0x00007ffff7a7346d in __isoc99_sscanf (
+    s=0x604810 <input_strings+80> "6", format=0x4028d9 "%d %d %d %d %d %d")
+    at isoc99_sscanf.c:26
+26	in isoc99_sscanf.c
+Dump of assembler code for function __isoc99_sscanf:
+   0x00007ffff7a73450 <+0>:	sub    $0xd8,%rsp
+   0x00007ffff7a73457 <+7>:	test   %al,%al
+   0x00007ffff7a73459 <+9>:	mov    %rdx,0x30(%rsp)
+   0x00007ffff7a7345e <+14>:	mov    %rcx,0x38(%rsp)
+   0x00007ffff7a73463 <+19>:	mov    %r8,0x40(%rsp)
+   0x00007ffff7a73468 <+24>:	mov    %r9,0x48(%rsp)
+=> 0x00007ffff7a7346d <+29>:	je     0x7ffff7a734a6 <__isoc99_sscanf+86>
+   0x00007ffff7a7346f <+31>:	movaps %xmm0,0x50(%rsp)
+   0x00007ffff7a73474 <+36>:	movaps %xmm1,0x60(%rsp)
+   0x00007ffff7a73479 <+41>:	movaps %xmm2,0x70(%rsp)
+   0x00007ffff7a7347e <+46>:	movaps %xmm3,0x80(%rsp)
+   0x00007ffff7a73486 <+54>:	movaps %xmm4,0x90(%rsp)
+   0x00007ffff7a7348e <+62>:	movaps %xmm5,0xa0(%rsp)
+   0x00007ffff7a73496 <+70>:	movaps %xmm6,0xb0(%rsp)
+   0x00007ffff7a7349e <+78>:	movaps %xmm7,0xc0(%rsp)
+   0x00007ffff7a734a6 <+86>:	lea    0xe0(%rsp),%rax
+   0x00007ffff7a734ae <+94>:	lea    0x8(%rsp),%rdx
+   0x00007ffff7a734b3 <+99>:	mov    %rax,0x10(%rsp)
+   0x00007ffff7a734b8 <+104>:	lea    0x20(%rsp),%rax
+   0x00007ffff7a734bd <+109>:	movl   $0x10,0x8(%rsp)
+   0x00007ffff7a734c5 <+117>:	movl   $0x30,0xc(%rsp)
+   0x00007ffff7a734cd <+125>:	mov    %rax,0x18(%rsp)
+   0x00007ffff7a734d2 <+130>:	callq  0x7ffff7a734e0 <__GI___isoc99_vsscanf>
+   0x00007ffff7a734d7 <+135>:	add    $0xd8,%rsp
+   0x00007ffff7a734de <+142>:	retq   
+End of assembler dump.
+30	in isoc99_sscanf.c
+Dump of assembler code for function __isoc99_sscanf:
+   0x00007ffff7a73450 <+0>:	sub    $0xd8,%rsp
+   0x00007ffff7a73457 <+7>:	test   %al,%al
+   0x00007ffff7a73459 <+9>:	mov    %rdx,0x30(%rsp)
+   0x00007ffff7a7345e <+14>:	mov    %rcx,0x38(%rsp)
+   0x00007ffff7a73463 <+19>:	mov    %r8,0x40(%rsp)
+   0x00007ffff7a73468 <+24>:	mov    %r9,0x48(%rsp)
+   0x00007ffff7a7346d <+29>:	je     0x7ffff7a734a6 <__isoc99_sscanf+86>
+   0x00007ffff7a7346f <+31>:	movaps %xmm0,0x50(%rsp)
+   0x00007ffff7a73474 <+36>:	movaps %xmm1,0x60(%rsp)
+   0x00007ffff7a73479 <+41>:	movaps %xmm2,0x70(%rsp)
+   0x00007ffff7a7347e <+46>:	movaps %xmm3,0x80(%rsp)
+   0x00007ffff7a73486 <+54>:	movaps %xmm4,0x90(%rsp)
+   0x00007ffff7a7348e <+62>:	movaps %xmm5,0xa0(%rsp)
+   0x00007ffff7a73496 <+70>:	movaps %xmm6,0xb0(%rsp)
+   0x00007ffff7a7349e <+78>:	movaps %xmm7,0xc0(%rsp)
+=> 0x00007ffff7a734a6 <+86>:	lea    0xe0(%rsp),%rax
+   0x00007ffff7a734ae <+94>:	lea    0x8(%rsp),%rdx
+   0x00007ffff7a734b3 <+99>:	mov    %rax,0x10(%rsp)
+   0x00007ffff7a734b8 <+104>:	lea    0x20(%rsp),%rax
+   0x00007ffff7a734bd <+109>:	movl   $0x10,0x8(%rsp)
+   0x00007ffff7a734c5 <+117>:	movl   $0x30,0xc(%rsp)
+   0x00007ffff7a734cd <+125>:	mov    %rax,0x18(%rsp)
+   0x00007ffff7a734d2 <+130>:	callq  0x7ffff7a734e0 <__GI___isoc99_vsscanf>
+   0x00007ffff7a734d7 <+135>:	add    $0xd8,%rsp
+   0x00007ffff7a734de <+142>:	retq   
+End of assembler dump.
+Breakpoint 6 at 0x7ffff7a734d2: file isoc99_sscanf.c, line 31.
+Continuing.
+
+Breakpoint 6, __isoc99_sscanf (s=0x604810 <input_strings+80> "6", 
+    format=0x4028d9 "%d %d %d %d %d %d") at isoc99_sscanf.c:31
+31	in isoc99_sscanf.c
+Dump of assembler code for function __isoc99_sscanf:
+   0x00007ffff7a73450 <+0>:	sub    $0xd8,%rsp
+   0x00007ffff7a73457 <+7>:	test   %al,%al
+   0x00007ffff7a73459 <+9>:	mov    %rdx,0x30(%rsp)
+   0x00007ffff7a7345e <+14>:	mov    %rcx,0x38(%rsp)
+   0x00007ffff7a73463 <+19>:	mov    %r8,0x40(%rsp)
+   0x00007ffff7a73468 <+24>:	mov    %r9,0x48(%rsp)
+   0x00007ffff7a7346d <+29>:	je     0x7ffff7a734a6 <__isoc99_sscanf+86>
+   0x00007ffff7a7346f <+31>:	movaps %xmm0,0x50(%rsp)
+   0x00007ffff7a73474 <+36>:	movaps %xmm1,0x60(%rsp)
+   0x00007ffff7a73479 <+41>:	movaps %xmm2,0x70(%rsp)
+   0x00007ffff7a7347e <+46>:	movaps %xmm3,0x80(%rsp)
+   0x00007ffff7a73486 <+54>:	movaps %xmm4,0x90(%rsp)
+   0x00007ffff7a7348e <+62>:	movaps %xmm5,0xa0(%rsp)
+   0x00007ffff7a73496 <+70>:	movaps %xmm6,0xb0(%rsp)
+   0x00007ffff7a7349e <+78>:	movaps %xmm7,0xc0(%rsp)
+   0x00007ffff7a734a6 <+86>:	lea    0xe0(%rsp),%rax
+   0x00007ffff7a734ae <+94>:	lea    0x8(%rsp),%rdx
+   0x00007ffff7a734b3 <+99>:	mov    %rax,0x10(%rsp)
+   0x00007ffff7a734b8 <+104>:	lea    0x20(%rsp),%rax
+   0x00007ffff7a734bd <+109>:	movl   $0x10,0x8(%rsp)
+   0x00007ffff7a734c5 <+117>:	movl   $0x30,0xc(%rsp)
+   0x00007ffff7a734cd <+125>:	mov    %rax,0x18(%rsp)
+=> 0x00007ffff7a734d2 <+130>:	callq  0x7ffff7a734e0 <__GI___isoc99_vsscanf>
+   0x00007ffff7a734d7 <+135>:	add    $0xd8,%rsp
+   0x00007ffff7a734de <+142>:	retq   
+End of assembler dump.
+__GI___isoc99_vsscanf (string=0x604810 <input_strings+80> "6", 
+    format=0x4028d9 "%d %d %d %d %d %d", args=args@entry=0x7fffffffdd88)
+    at isoc99_vsscanf.c:33
+33	isoc99_vsscanf.c: No such file or directory.
+Dump of assembler code for function __GI___isoc99_vsscanf:
+=> 0x00007ffff7a734e0 <+0>:	push   %r13
+   0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+   0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+   0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+   0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+   0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+Breakpoint 7 at 0x7ffff7a73514: file isoc99_vsscanf.c, line 39.
+39	in isoc99_vsscanf.c
+Dump of assembler code for function __GI___isoc99_vsscanf:
+   0x00007ffff7a734e0 <+0>:	push   %r13
+=> 0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+   0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+   0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+   0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+   0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+Note: breakpoint 7 also set at pc 0x7ffff7a73514.
+Breakpoint 8 at 0x7ffff7a73514: file isoc99_vsscanf.c, line 39.
+Continuing.
+
+Breakpoint 7, __GI___isoc99_vsscanf (string=0x604810 <input_strings+80> "6", 
+    format=0x4028d9 "%d %d %d %d %d %d", args=args@entry=0x7fffffffdd88)
+    at isoc99_vsscanf.c:39
+39	in isoc99_vsscanf.c
+Dump of assembler code for function __GI___isoc99_vsscanf:
+   0x00007ffff7a734e0 <+0>:	push   %r13
+   0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+=> 0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+   0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+   0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+   0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+_IO_no_init (fp=fp@entry=0x7fffffffdc60, flags=flags@entry=32768, 
+    orientation=orientation@entry=-1, wd=wd@entry=0x0, jmp=jmp@entry=0x0)
+    at genops.c:643
+643	genops.c: No such file or directory.
+Dump of assembler code for function _IO_no_init:
+=> 0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+Breakpoint 9 at 0x7ffff7a90cf6: file genops.c, line 644.
+Continuing.
+
+Breakpoint 9, _IO_no_init (fp=fp@entry=0x7fffffffdc60, 
+    flags=flags@entry=32768, orientation=orientation@entry=-1, 
+    wd=wd@entry=0x0, jmp=jmp@entry=0x0) at genops.c:644
+644	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+=> 0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+_IO_old_init (fp=fp@entry=0x7fffffffdc60, flags=flags@entry=32768)
+    at genops.c:626
+626	in genops.c
+Dump of assembler code for function _IO_old_init:
+=> 0x00007ffff7a90c30 <+0>:	xor    %eax,%eax
+   0x00007ffff7a90c32 <+2>:	or     $0xfbad0000,%esi
+   0x00007ffff7a90c38 <+8>:	movl   $0x0,0x74(%rdi)
+   0x00007ffff7a90c3f <+15>:	mov    %ax,0x80(%rdi)
+   0x00007ffff7a90c46 <+22>:	mov    0x88(%rdi),%rax
+   0x00007ffff7a90c4d <+29>:	mov    %esi,(%rdi)
+   0x00007ffff7a90c4f <+31>:	movq   $0x0,0x38(%rdi)
+   0x00007ffff7a90c57 <+39>:	movq   $0x0,0x40(%rdi)
+   0x00007ffff7a90c5f <+47>:	movq   $0x0,0x18(%rdi)
+   0x00007ffff7a90c67 <+55>:	test   %rax,%rax
+   0x00007ffff7a90c6a <+58>:	movq   $0x0,0x8(%rdi)
+   0x00007ffff7a90c72 <+66>:	movq   $0x0,0x10(%rdi)
+   0x00007ffff7a90c7a <+74>:	movq   $0x0,0x20(%rdi)
+   0x00007ffff7a90c82 <+82>:	movq   $0x0,0x28(%rdi)
+   0x00007ffff7a90c8a <+90>:	movq   $0x0,0x30(%rdi)
+   0x00007ffff7a90c92 <+98>:	movq   $0x0,0x68(%rdi)
+   0x00007ffff7a90c9a <+106>:	movq   $0x0,0x48(%rdi)
+   0x00007ffff7a90ca2 <+114>:	movq   $0x0,0x50(%rdi)
+   0x00007ffff7a90caa <+122>:	movq   $0x0,0x58(%rdi)
+   0x00007ffff7a90cb2 <+130>:	movq   $0x0,0x60(%rdi)
+   0x00007ffff7a90cba <+138>:	je     0x7ffff7a90cd1 <_IO_old_init+161>
+   0x00007ffff7a90cbc <+140>:	movl   $0x0,(%rax)
+   0x00007ffff7a90cc2 <+146>:	movl   $0x0,0x4(%rax)
+   0x00007ffff7a90cc9 <+153>:	movq   $0x0,0x8(%rax)
+   0x00007ffff7a90cd1 <+161>:	repz retq 
+End of assembler dump.
+Breakpoint 10 at 0x7ffff7a90cba: file genops.c, line 631.
+Continuing.
+
+Breakpoint 10, _IO_old_init (fp=fp@entry=0x7fffffffdc60, 
+    flags=flags@entry=32768) at genops.c:631
+631	in genops.c
+Dump of assembler code for function _IO_old_init:
+   0x00007ffff7a90c30 <+0>:	xor    %eax,%eax
+   0x00007ffff7a90c32 <+2>:	or     $0xfbad0000,%esi
+   0x00007ffff7a90c38 <+8>:	movl   $0x0,0x74(%rdi)
+   0x00007ffff7a90c3f <+15>:	mov    %ax,0x80(%rdi)
+   0x00007ffff7a90c46 <+22>:	mov    0x88(%rdi),%rax
+   0x00007ffff7a90c4d <+29>:	mov    %esi,(%rdi)
+   0x00007ffff7a90c4f <+31>:	movq   $0x0,0x38(%rdi)
+   0x00007ffff7a90c57 <+39>:	movq   $0x0,0x40(%rdi)
+   0x00007ffff7a90c5f <+47>:	movq   $0x0,0x18(%rdi)
+   0x00007ffff7a90c67 <+55>:	test   %rax,%rax
+   0x00007ffff7a90c6a <+58>:	movq   $0x0,0x8(%rdi)
+   0x00007ffff7a90c72 <+66>:	movq   $0x0,0x10(%rdi)
+   0x00007ffff7a90c7a <+74>:	movq   $0x0,0x20(%rdi)
+   0x00007ffff7a90c82 <+82>:	movq   $0x0,0x28(%rdi)
+   0x00007ffff7a90c8a <+90>:	movq   $0x0,0x30(%rdi)
+   0x00007ffff7a90c92 <+98>:	movq   $0x0,0x68(%rdi)
+   0x00007ffff7a90c9a <+106>:	movq   $0x0,0x48(%rdi)
+   0x00007ffff7a90ca2 <+114>:	movq   $0x0,0x50(%rdi)
+   0x00007ffff7a90caa <+122>:	movq   $0x0,0x58(%rdi)
+   0x00007ffff7a90cb2 <+130>:	movq   $0x0,0x60(%rdi)
+=> 0x00007ffff7a90cba <+138>:	je     0x7ffff7a90cd1 <_IO_old_init+161>
+   0x00007ffff7a90cbc <+140>:	movl   $0x0,(%rax)
+   0x00007ffff7a90cc2 <+146>:	movl   $0x0,0x4(%rax)
+   0x00007ffff7a90cc9 <+153>:	movq   $0x0,0x8(%rax)
+   0x00007ffff7a90cd1 <+161>:	repz retq 
+End of assembler dump.
+0x00007ffff7a90cd1	632	in genops.c
+Dump of assembler code for function _IO_old_init:
+   0x00007ffff7a90c30 <+0>:	xor    %eax,%eax
+   0x00007ffff7a90c32 <+2>:	or     $0xfbad0000,%esi
+   0x00007ffff7a90c38 <+8>:	movl   $0x0,0x74(%rdi)
+   0x00007ffff7a90c3f <+15>:	mov    %ax,0x80(%rdi)
+   0x00007ffff7a90c46 <+22>:	mov    0x88(%rdi),%rax
+   0x00007ffff7a90c4d <+29>:	mov    %esi,(%rdi)
+   0x00007ffff7a90c4f <+31>:	movq   $0x0,0x38(%rdi)
+   0x00007ffff7a90c57 <+39>:	movq   $0x0,0x40(%rdi)
+   0x00007ffff7a90c5f <+47>:	movq   $0x0,0x18(%rdi)
+   0x00007ffff7a90c67 <+55>:	test   %rax,%rax
+   0x00007ffff7a90c6a <+58>:	movq   $0x0,0x8(%rdi)
+   0x00007ffff7a90c72 <+66>:	movq   $0x0,0x10(%rdi)
+   0x00007ffff7a90c7a <+74>:	movq   $0x0,0x20(%rdi)
+   0x00007ffff7a90c82 <+82>:	movq   $0x0,0x28(%rdi)
+   0x00007ffff7a90c8a <+90>:	movq   $0x0,0x30(%rdi)
+   0x00007ffff7a90c92 <+98>:	movq   $0x0,0x68(%rdi)
+   0x00007ffff7a90c9a <+106>:	movq   $0x0,0x48(%rdi)
+   0x00007ffff7a90ca2 <+114>:	movq   $0x0,0x50(%rdi)
+   0x00007ffff7a90caa <+122>:	movq   $0x0,0x58(%rdi)
+   0x00007ffff7a90cb2 <+130>:	movq   $0x0,0x60(%rdi)
+   0x00007ffff7a90cba <+138>:	je     0x7ffff7a90cd1 <_IO_old_init+161>
+   0x00007ffff7a90cbc <+140>:	movl   $0x0,(%rax)
+   0x00007ffff7a90cc2 <+146>:	movl   $0x0,0x4(%rax)
+   0x00007ffff7a90cc9 <+153>:	movq   $0x0,0x8(%rax)
+=> 0x00007ffff7a90cd1 <+161>:	repz retq 
+End of assembler dump.
+_IO_no_init (fp=fp@entry=0x7fffffffdc60, flags=flags@entry=32768, 
+    orientation=orientation@entry=-1, wd=wd@entry=0x0, jmp=jmp@entry=0x0)
+    at genops.c:647
+647	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+=> 0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+645	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+=> 0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+=> 0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+=> 0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+647	in genops.c
+667	in genops.c
+0x00007ffff7a90d9b	667	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+=> 0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+669	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+=> 0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+   0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+670	in genops.c
+0x00007ffff7a90d7f	670	in genops.c
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+=> 0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+Dump of assembler code for function _IO_no_init:
+   0x00007ffff7a90ce0 <+0>:	push   %r13
+   0x00007ffff7a90ce2 <+2>:	mov    %r8,%r13
+   0x00007ffff7a90ce5 <+5>:	push   %r12
+   0x00007ffff7a90ce7 <+7>:	mov    %edx,%r12d
+   0x00007ffff7a90cea <+10>:	push   %rbp
+   0x00007ffff7a90ceb <+11>:	mov    %rdi,%rbp
+   0x00007ffff7a90cee <+14>:	push   %rbx
+   0x00007ffff7a90cef <+15>:	mov    %rcx,%rbx
+   0x00007ffff7a90cf2 <+18>:	sub    $0x8,%rsp
+   0x00007ffff7a90cf6 <+22>:	callq  0x7ffff7a90c30 <_IO_old_init>
+   0x00007ffff7a90cfb <+27>:	test   %r12d,%r12d
+   0x00007ffff7a90cfe <+30>:	mov    %r12d,0xc0(%rbp)
+   0x00007ffff7a90d05 <+37>:	js     0x7ffff7a90d90 <_IO_no_init+176>
+   0x00007ffff7a90d0b <+43>:	mov    %rbx,0xa0(%rbp)
+   0x00007ffff7a90d12 <+50>:	movq   $0x0,0x30(%rbx)
+   0x00007ffff7a90d1a <+58>:	movq   $0x0,0x38(%rbx)
+   0x00007ffff7a90d22 <+66>:	movq   $0x0,0x10(%rbx)
+   0x00007ffff7a90d2a <+74>:	movq   $0x0,(%rbx)
+   0x00007ffff7a90d31 <+81>:	movq   $0x0,0x8(%rbx)
+   0x00007ffff7a90d39 <+89>:	movq   $0x0,0x18(%rbx)
+   0x00007ffff7a90d41 <+97>:	movq   $0x0,0x20(%rbx)
+   0x00007ffff7a90d49 <+105>:	movq   $0x0,0x28(%rbx)
+   0x00007ffff7a90d51 <+113>:	movq   $0x0,0x40(%rbx)
+   0x00007ffff7a90d59 <+121>:	movq   $0x0,0x48(%rbx)
+   0x00007ffff7a90d61 <+129>:	movq   $0x0,0x50(%rbx)
+   0x00007ffff7a90d69 <+137>:	mov    %r13,0x140(%rbx)
+   0x00007ffff7a90d70 <+144>:	movq   $0x0,0xa8(%rbp)
+   0x00007ffff7a90d7b <+155>:	add    $0x8,%rsp
+=> 0x00007ffff7a90d7f <+159>:	pop    %rbx
+   0x00007ffff7a90d80 <+160>:	pop    %rbp
+   0x00007ffff7a90d81 <+161>:	pop    %r12
+   0x00007ffff7a90d83 <+163>:	pop    %r13
+   0x00007ffff7a90d85 <+165>:	retq   
+   0x00007ffff7a90d86 <+166>:	nopw   %cs:0x0(%rax,%rax,1)
+   0x00007ffff7a90d90 <+176>:	movq   $0xffffffffffffffff,0xa0(%rbp)
+   0x00007ffff7a90d9b <+187>:	jmp    0x7ffff7a90d70 <_IO_no_init+144>
+End of assembler dump.
+0x00007ffff7a90d80	670	in genops.c
+0x00007ffff7a90d81	670	in genops.c
+0x00007ffff7a90d83	670	in genops.c
+0x00007ffff7a90d85	670	in genops.c
+__GI___isoc99_vsscanf (string=0x604810 <input_strings+80> "6", 
+    format=0x4028d9 "%d %d %d %d %d %d", args=args@entry=0x7fffffffdd88)
+    at isoc99_vsscanf.c:40
+40	isoc99_vsscanf.c: No such file or directory.
+Dump of assembler code for function __GI___isoc99_vsscanf:
+   0x00007ffff7a734e0 <+0>:	push   %r13
+   0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+   0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+=> 0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+   0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+   0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+41	in isoc99_vsscanf.c
+Dump of assembler code for function __GI___isoc99_vsscanf:
+   0x00007ffff7a734e0 <+0>:	push   %r13
+   0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+   0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+   0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+=> 0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+   0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+0x00007ffff7a73523	41	in isoc99_vsscanf.c
+0x00007ffff7a73526	41	in isoc99_vsscanf.c
+0x00007ffff7a73528	41	in isoc99_vsscanf.c
+40	in isoc99_vsscanf.c
+Dump of assembler code for function __GI___isoc99_vsscanf:
+   0x00007ffff7a734e0 <+0>:	push   %r13
+   0x00007ffff7a734e2 <+2>:	xor    %r8d,%r8d
+   0x00007ffff7a734e5 <+5>:	mov    %rdi,%r13
+   0x00007ffff7a734e8 <+8>:	xor    %ecx,%ecx
+   0x00007ffff7a734ea <+10>:	push   %r12
+   0x00007ffff7a734ec <+12>:	mov    %rdx,%r12
+   0x00007ffff7a734ef <+15>:	mov    $0xffffffff,%edx
+   0x00007ffff7a734f4 <+20>:	push   %rbp
+   0x00007ffff7a734f5 <+21>:	mov    %rsi,%rbp
+   0x00007ffff7a734f8 <+24>:	mov    $0x8000,%esi
+   0x00007ffff7a734fd <+29>:	push   %rbx
+   0x00007ffff7a734fe <+30>:	sub    $0xf8,%rsp
+   0x00007ffff7a73505 <+37>:	mov    %rsp,%rdi
+   0x00007ffff7a73508 <+40>:	movq   $0x0,0x88(%rsp)
+   0x00007ffff7a73514 <+52>:	callq  0x7ffff7a90ce0 <_IO_no_init>
+   0x00007ffff7a73519 <+57>:	lea    0x35f240(%rip),%rax        # 0x7ffff7dd2760 <_IO_str_jumps>
+   0x00007ffff7a73520 <+64>:	mov    %r13,%rsi
+   0x00007ffff7a73523 <+67>:	mov    %rsp,%rdi
+   0x00007ffff7a73526 <+70>:	xor    %ecx,%ecx
+   0x00007ffff7a73528 <+72>:	xor    %edx,%edx
+=> 0x00007ffff7a7352a <+74>:	mov    %rax,0xd8(%rsp)
+   0x00007ffff7a73532 <+82>:	callq  0x7ffff7a920a0 <_IO_str_init_static_internal>
+   0x00007ffff7a73537 <+87>:	mov    %r12,%rdx
+   0x00007ffff7a7353a <+90>:	mov    %rbp,%rsi
+   0x00007ffff7a7353d <+93>:	mov    %rsp,%rdi
+   0x00007ffff7a73540 <+96>:	xor    %ecx,%ecx
+   0x00007ffff7a73542 <+98>:	orl    $0x10,0x74(%rsp)
+   0x00007ffff7a73547 <+103>:	callq  0x7ffff7a696f0 <_IO_vfscanf_internal>
+   0x00007ffff7a7354c <+108>:	add    $0xf8,%rsp
+   0x00007ffff7a73553 <+115>:	pop    %rbx
+   0x00007ffff7a73554 <+116>:	pop    %rbp
+   0x00007ffff7a73555 <+117>:	pop    %r12
+   0x00007ffff7a73557 <+119>:	pop    %r13
+   0x00007ffff7a73559 <+121>:	retq   
+End of assembler dump.
+41	in isoc99_vsscanf.c
+_IO_str_init_static_internal (sf=sf@entry=0x7fffffffdc60, 
+    ptr=ptr@entry=0x604810 <input_strings+80> "6", size=size@entry=0, 
+    pstart=pstart@entry=0x0) at strops.c:39
+39	strops.c: No such file or directory.
+0x00007ffff7a920a2	39	in strops.c
+Dump of assembler code for function _IO_str_init_static_internal:
+   0x00007ffff7a920a0 <+0>:	push   %r13
+=> 0x00007ffff7a920a2 <+2>:	mov    %rcx,%r13
+   0x00007ffff7a920a5 <+5>:	push   %r12
+   0x00007ffff7a920a7 <+7>:	push   %rbp
+   0x00007ffff7a920a8 <+8>:	mov    %rsi,%rbp
+   0x00007ffff7a920ab <+11>:	push   %rbx
+   0x00007ffff7a920ac <+12>:	mov    %rdi,%rbx
+   0x00007ffff7a920af <+15>:	sub    $0x8,%rsp
+   0x00007ffff7a920b3 <+19>:	test   %rdx,%rdx
+   0x00007ffff7a920b6 <+22>:	jne    0x7ffff7a92110 <_IO_str_init_static_internal+112>
+   0x00007ffff7a920b8 <+24>:	xor    %esi,%esi
+   0x00007ffff7a920ba <+26>:	mov    %rbp,%rdi
+   0x00007ffff7a920bd <+29>:	callq  0x7ffff7aa88b0 <rawmemchr>
+   0x00007ffff7a920c2 <+34>:	mov    %rax,%r12
+   0x00007ffff7a920c5 <+37>:	xor    %ecx,%ecx
+   0x00007ffff7a920c7 <+39>:	mov    %r12,%rdx
+   0x00007ffff7a920ca <+42>:	mov    %rbp,%rsi
+   0x00007ffff7a920cd <+45>:	mov    %rbx,%rdi
+   0x00007ffff7a920d0 <+48>:	callq  0x7ffff7a90500 <__GI__IO_setb>
+   0x00007ffff7a920d5 <+53>:	test   %r13,%r13
+   0x00007ffff7a920d8 <+56>:	mov    %rbp,0x20(%rbx)
+   0x00007ffff7a920dc <+60>:	mov    %rbp,0x18(%rbx)
+   0x00007ffff7a920e0 <+64>:	mov    %rbp,0x8(%rbx)
+   0x00007ffff7a920e4 <+68>:	je     0x7ffff7a92128 <_IO_str_init_static_internal+136>
+   0x00007ffff7a920e6 <+70>:	mov    %r13,0x28(%rbx)
+   0x00007ffff7a920ea <+74>:	mov    %r12,0x30(%rbx)
+   0x00007ffff7a920ee <+78>:	mov    %r13,0x10(%rbx)
+   0x00007ffff7a920f2 <+82>:	movq   $0x0,0xe0(%rbx)
+   0x00007ffff7a920fd <+93>:	add    $0x8,%rsp
+   0x00007ffff7a92101 <+97>:	pop    %rbx
+   0x00007ffff7a92102 <+98>:	pop    %rbp
+   0x00007ffff7a92103 <+99>:	pop    %r12
+   0x00007ffff7a92105 <+101>:	pop    %r13
+   0x00007ffff7a92107 <+103>:	retq   
+   0x00007ffff7a92108 <+104>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92110 <+112>:	add    %rsi,%rdx
+   0x00007ffff7a92113 <+115>:	mov    $0xffffffffffffffff,%r12
+   0x00007ffff7a9211a <+122>:	cmp    %rdx,%rsi
+   0x00007ffff7a9211d <+125>:	cmovb  %rdx,%r12
+   0x00007ffff7a92121 <+129>:	jmp    0x7ffff7a920c5 <_IO_str_init_static_internal+37>
+   0x00007ffff7a92123 <+131>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92128 <+136>:	mov    %rbp,0x28(%rbx)
+   0x00007ffff7a9212c <+140>:	mov    %rbp,0x30(%rbx)
+   0x00007ffff7a92130 <+144>:	mov    %r12,0x10(%rbx)
+   0x00007ffff7a92134 <+148>:	jmp    0x7ffff7a920f2 <_IO_str_init_static_internal+82>
+End of assembler dump.
+Breakpoint 11 at 0x7ffff7a920b6: file strops.c, line 43.
+0x00007ffff7a920a5	39	in strops.c
+Dump of assembler code for function _IO_str_init_static_internal:
+   0x00007ffff7a920a0 <+0>:	push   %r13
+   0x00007ffff7a920a2 <+2>:	mov    %rcx,%r13
+=> 0x00007ffff7a920a5 <+5>:	push   %r12
+   0x00007ffff7a920a7 <+7>:	push   %rbp
+   0x00007ffff7a920a8 <+8>:	mov    %rsi,%rbp
+   0x00007ffff7a920ab <+11>:	push   %rbx
+   0x00007ffff7a920ac <+12>:	mov    %rdi,%rbx
+   0x00007ffff7a920af <+15>:	sub    $0x8,%rsp
+   0x00007ffff7a920b3 <+19>:	test   %rdx,%rdx
+   0x00007ffff7a920b6 <+22>:	jne    0x7ffff7a92110 <_IO_str_init_static_internal+112>
+   0x00007ffff7a920b8 <+24>:	xor    %esi,%esi
+   0x00007ffff7a920ba <+26>:	mov    %rbp,%rdi
+   0x00007ffff7a920bd <+29>:	callq  0x7ffff7aa88b0 <rawmemchr>
+   0x00007ffff7a920c2 <+34>:	mov    %rax,%r12
+   0x00007ffff7a920c5 <+37>:	xor    %ecx,%ecx
+   0x00007ffff7a920c7 <+39>:	mov    %r12,%rdx
+   0x00007ffff7a920ca <+42>:	mov    %rbp,%rsi
+   0x00007ffff7a920cd <+45>:	mov    %rbx,%rdi
+   0x00007ffff7a920d0 <+48>:	callq  0x7ffff7a90500 <__GI__IO_setb>
+   0x00007ffff7a920d5 <+53>:	test   %r13,%r13
+   0x00007ffff7a920d8 <+56>:	mov    %rbp,0x20(%rbx)
+   0x00007ffff7a920dc <+60>:	mov    %rbp,0x18(%rbx)
+   0x00007ffff7a920e0 <+64>:	mov    %rbp,0x8(%rbx)
+   0x00007ffff7a920e4 <+68>:	je     0x7ffff7a92128 <_IO_str_init_static_internal+136>
+   0x00007ffff7a920e6 <+70>:	mov    %r13,0x28(%rbx)
+   0x00007ffff7a920ea <+74>:	mov    %r12,0x30(%rbx)
+   0x00007ffff7a920ee <+78>:	mov    %r13,0x10(%rbx)
+   0x00007ffff7a920f2 <+82>:	movq   $0x0,0xe0(%rbx)
+   0x00007ffff7a920fd <+93>:	add    $0x8,%rsp
+   0x00007ffff7a92101 <+97>:	pop    %rbx
+   0x00007ffff7a92102 <+98>:	pop    %rbp
+   0x00007ffff7a92103 <+99>:	pop    %r12
+   0x00007ffff7a92105 <+101>:	pop    %r13
+   0x00007ffff7a92107 <+103>:	retq   
+   0x00007ffff7a92108 <+104>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92110 <+112>:	add    %rsi,%rdx
+   0x00007ffff7a92113 <+115>:	mov    $0xffffffffffffffff,%r12
+   0x00007ffff7a9211a <+122>:	cmp    %rdx,%rsi
+   0x00007ffff7a9211d <+125>:	cmovb  %rdx,%r12
+   0x00007ffff7a92121 <+129>:	jmp    0x7ffff7a920c5 <_IO_str_init_static_internal+37>
+   0x00007ffff7a92123 <+131>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92128 <+136>:	mov    %rbp,0x28(%rbx)
+   0x00007ffff7a9212c <+140>:	mov    %rbp,0x30(%rbx)
+   0x00007ffff7a92130 <+144>:	mov    %r12,0x10(%rbx)
+   0x00007ffff7a92134 <+148>:	jmp    0x7ffff7a920f2 <_IO_str_init_static_internal+82>
+End of assembler dump.
+Dump of assembler code for function _IO_str_init_static_internal:
+   0x00007ffff7a920a0 <+0>:	push   %r13
+   0x00007ffff7a920a2 <+2>:	mov    %rcx,%r13
+=> 0x00007ffff7a920a5 <+5>:	push   %r12
+   0x00007ffff7a920a7 <+7>:	push   %rbp
+   0x00007ffff7a920a8 <+8>:	mov    %rsi,%rbp
+   0x00007ffff7a920ab <+11>:	push   %rbx
+   0x00007ffff7a920ac <+12>:	mov    %rdi,%rbx
+   0x00007ffff7a920af <+15>:	sub    $0x8,%rsp
+   0x00007ffff7a920b3 <+19>:	test   %rdx,%rdx
+   0x00007ffff7a920b6 <+22>:	jne    0x7ffff7a92110 <_IO_str_init_static_internal+112>
+   0x00007ffff7a920b8 <+24>:	xor    %esi,%esi
+   0x00007ffff7a920ba <+26>:	mov    %rbp,%rdi
+   0x00007ffff7a920bd <+29>:	callq  0x7ffff7aa88b0 <rawmemchr>
+   0x00007ffff7a920c2 <+34>:	mov    %rax,%r12
+   0x00007ffff7a920c5 <+37>:	xor    %ecx,%ecx
+   0x00007ffff7a920c7 <+39>:	mov    %r12,%rdx
+   0x00007ffff7a920ca <+42>:	mov    %rbp,%rsi
+   0x00007ffff7a920cd <+45>:	mov    %rbx,%rdi
+   0x00007ffff7a920d0 <+48>:	callq  0x7ffff7a90500 <__GI__IO_setb>
+   0x00007ffff7a920d5 <+53>:	test   %r13,%r13
+   0x00007ffff7a920d8 <+56>:	mov    %rbp,0x20(%rbx)
+   0x00007ffff7a920dc <+60>:	mov    %rbp,0x18(%rbx)
+   0x00007ffff7a920e0 <+64>:	mov    %rbp,0x8(%rbx)
+   0x00007ffff7a920e4 <+68>:	je     0x7ffff7a92128 <_IO_str_init_static_internal+136>
+   0x00007ffff7a920e6 <+70>:	mov    %r13,0x28(%rbx)
+   0x00007ffff7a920ea <+74>:	mov    %r12,0x30(%rbx)
+   0x00007ffff7a920ee <+78>:	mov    %r13,0x10(%rbx)
+   0x00007ffff7a920f2 <+82>:	movq   $0x0,0xe0(%rbx)
+   0x00007ffff7a920fd <+93>:	add    $0x8,%rsp
+   0x00007ffff7a92101 <+97>:	pop    %rbx
+   0x00007ffff7a92102 <+98>:	pop    %rbp
+   0x00007ffff7a92103 <+99>:	pop    %r12
+   0x00007ffff7a92105 <+101>:	pop    %r13
+   0x00007ffff7a92107 <+103>:	retq   
+   0x00007ffff7a92108 <+104>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92110 <+112>:	add    %rsi,%rdx
+   0x00007ffff7a92113 <+115>:	mov    $0xffffffffffffffff,%r12
+   0x00007ffff7a9211a <+122>:	cmp    %rdx,%rsi
+   0x00007ffff7a9211d <+125>:	cmovb  %rdx,%r12
+   0x00007ffff7a92121 <+129>:	jmp    0x7ffff7a920c5 <_IO_str_init_static_internal+37>
+   0x00007ffff7a92123 <+131>:	nopl   0x0(%rax,%rax,1)
+   0x00007ffff7a92128 <+136>:	mov    %rbp,0x28(%rbx)
+   0x00007ffff7a9212c <+140>:	mov    %rbp,0x30(%rbx)
+   0x00007ffff7a92130 <+144>:	mov    %r12,0x10(%rbx)
+   0x00007ffff7a92134 <+148>:	jmp    0x7ffff7a920f2 <_IO_str_init_static_internal+82>
+End of assembler dump.
+A debugging session is active.
+
+	Inferior 1 [process 2461] will be killed.
+
+Quit anyway? (y or n) 
