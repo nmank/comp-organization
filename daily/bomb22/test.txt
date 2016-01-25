@@ -1,2 +1,4 @@
 Why make trillions when we could make... billions?
-6
+1 2 4 8 16 32
+4 0
+99 3
