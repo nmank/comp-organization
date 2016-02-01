@@ -1,0 +1,118 @@
+BOMB2
+Nathan Mankovich
+1/25/2016
+
+
+00000000004010a0 <phase_4>:
+  4010a0:	48 83 ec 18          	sub    $0x18,%rsp
+  4010a4:	48 8d 4c 24 08       	lea    0x8(%rsp),%rcx 
+  4010a9:	48 8d 54 24 0c       	lea    0xc(%rsp),%rdx  
+  4010ae:	be e5 28 40 00       	mov    $0x4028e5,%esi     //%d%d
+  4010b3:	b8 00 00 00 00       	mov    $0x0,%eax
+  4010b8:	e8 b3 fb ff ff       	callq  400c70 <__isoc99_sscanf@plt>  //making the array
+  4010bd:	83 f8 02             	cmp    $0x2,%eax  //checking the size of the array
+  4010c0:	75 0c                	jne    4010ce <phase_4+0x2e>
+  4010c2:	8b 44 24 08          	mov    0x8(%rsp),%eax  //moving the second element of the array into register eax
+  4010c6:	83 e8 02             	sub    $0x2,%eax  //subtract two from it
+  4010c9:	83 f8 02             	cmp    $0x2,%eax  //compare it to two
+  4010cc:	76 05                	jbe    4010d3 <phase_4+0x33> //jump if below two (unsigned comparison)
+  4010ce:	e8 4a 05 00 00       	callq  40161d <explode_bomb>  
+  4010d3:	8b 74 24 08          	mov    0x8(%rsp),%esi  //then put the second element of the arrayinto register esi
+  4010d7:	bf 07 00 00 00       	mov    $0x7,%edi     //put 7 in register edi
+  4010dc:	e8 87 ff ff ff       	callq  401068 <func4>  //now we call function 4
+  4010e1:	3b 44 24 0c          	cmp    0xc(%rsp),%eax   //compare the first element in the array to register eax, which is 99 (returned from function 4) 
+  4010e5:	74 05                	je     4010ec <phase_4+0x4c>  //jump is the first element is 99
+  4010e7:	e8 31 05 00 00       	callq  40161d <explode_bomb>
+  4010ec:	48 83 c4 18          	add    $0x18,%rsp
+  4010f0:	c3                   	retq   
+
+
+0000000000401068 <func4>:
+  401068: 41 54                 push   %r12
+  40106a: 55                    push   %rbp
+  40106b: 53                    push   %rbx
+  40106c: 89 fb                 mov    %edi,%ebx          //move 7 into ebx
+  40106e: 85 ff                 test   %edi,%edi          //compare 7 to itself
+  401070: 7e 24                 jle    401096 <func4+0x2e>  //goes when edi is 0
+  401072: 89 f5                 mov    %esi,%ebp          //set these as the first element in the array
+  401074: 89 f0                 mov    %esi,%eax
+  401076: 83 ff 01              cmp    $0x1,%edi          //compare 1 to 7
+  401079: 74 20                 je     40109b <func4+0x33>      //we can never make this jump
+  40107b: 8d 7f ff              lea    -0x1(%rdi),%edi        //subtract 1 from 7
+  40107e: e8 e5 ff ff ff        callq  401068 <func4>
+  401083: 44 8d 24 28           lea    (%rax,%rbp,1),%r12d   //add rax to rbp and store in r12d
+  401087: 8d 7b fe              lea    -0x2(%rbx),%edi  //set edi as rbx - 2;
+  40108a: 89 ee                 mov    %ebp,%esi     
+  40108c: e8 d7 ff ff ff        callq  401068 <func4>
+  401091: 44 01 e0              add    %r12d,%eax
+  401094: eb 05                 jmp    40109b <func4+0x33>
+  401096: b8 00 00 00 00        mov    $0x0,%eax
+  40109b: 5b                    pop    %rbx
+  40109c: 5d                    pop    %rbp
+  40109d: 41 5c                 pop    %r12
+  40109f: c3                    retq   
+
+  %d%d
+
+void phase 4 (char *inp)
+{
+  int arr[2];
+  int foo = 0;
+
+  sscanf( "inp", "%d %d", &arr[0], &arr[1]);
+
+  if (sizeof(arr) != 2)
+  {
+    explode_bomb();
+  }
+  foo = arr[1];
+  foo = foo - 2;
+  if (abs(foo) < 2)
+  {
+    explode_bomb();
+  }
+
+  int foo7 = 7;
+
+  func4( foo7 );
+
+  if (arr[0]!=foo7) 
+  {
+    explode_bomb();
+  }
+}
+
+void func4( char *inp, int foo7 )
+{
+  
+  int bx = foo7;
+
+  if ( foo7 != 0 )
+  {
+
+    int a = inp[1];
+    int b = inp[1];
+
+    if ( foo7 != 1 )
+    {
+
+      foo7 = foo7 - 1;
+
+      func4( inp, foo7 );
+
+      int bla = 1 + b;  //not sure about this step
+
+      foo7 = rbx - 2;
+
+      func4( inp, foo7 );
+
+      bla = bla + b;
+    }
+
+  }
+}
+
+
+
+//////////////////////
+I'm still working on understanding recursion as a concept in programming (pretty sad.. I know).  I think my other issue is not having a full understanding of when registers represent variables or something else.  However, I clearly understand what rsp is.

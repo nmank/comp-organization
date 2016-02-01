@@ -1,0 +1,108 @@
+BOMB2
+Nathan Mankovich
+1/25/2016
+
+
+0000000000400fb3 <phase_3>:
+  400fb3:	48 83 ec 18          	sub    $0x18,%rsp
+  400fb7:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx
+  400fbc:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx
+  400fc1:	be e5 28 40 00       	mov    $0x4028e5,%esi
+  400fc6:	b8 00 00 00 00       	mov    $0x0,%eax
+  400fcb:	e8 a0 fc ff ff       	callq  400c70 <__isoc99_sscanf@plt>
+  400fd0:	83 f8 01             	cmp    $0x1,%eax
+  400fd3:	7f 05                	jg     400fda <phase_3+0x27> //left off here %d %d
+  400fd5:	e8 43 06 00 00       	callq  40161d <explode_bomb>
+  400fda:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)
+  400fdf:	77 66                	ja     401047 <phase_3+0x94>
+  400fe1:	8b 44 24 08          	mov    0x8(%rsp),%eax
+  400fe5:	ff 24 c5 80 26 40 00 	jmpq   *0x402680(,%rax,8)  //even with the canvas explanation and the book... I'm still confused about what this means
+  400fec:	b8 00 00 00 00       	mov    $0x0,%eax  //put 0 into register eax
+  400ff1:	eb 05                	jmp    400ff8 <phase_3+0x45>
+  400ff3:	b8 aa 01 00 00       	mov    $0x1aa,%eax    //put 426 in register eax (the jump will miss this)
+  400ff8:	2d a0 03 00 00       	sub    $0x3a0,%eax    //-928
+  400ffd:	eb 05                	jmp    401004 <phase_3+0x51>
+  400fff:	b8 00 00 00 00       	mov    $0x0,%eax
+  401004:	05 ee 00 00 00       	add    $0xee,%eax     //+238
+  401009:	eb 05                	jmp    401010 <phase_3+0x5d>
+  40100b:	b8 00 00 00 00       	mov    $0x0,%eax
+  401010:	2d 22 02 00 00       	sub    $0x222,%eax    //-0x222
+  401015:	eb 05                	jmp    40101c <phase_3+0x69>
+  401017:	b8 00 00 00 00       	mov    $0x0,%eax
+  40101c:	05 22 02 00 00       	add    $0x222,%eax    //+0x222
+  401021:	eb 05                	jmp    401028 <phase_3+0x75>
+  401023:	b8 00 00 00 00       	mov    $0x0,%eax
+  401028:	2d 22 02 00 00       	sub    $0x222,%eax    //-0x222
+  40102d:	eb 05                	jmp    401034 <phase_3+0x81>
+  40102f:	b8 00 00 00 00       	mov    $0x0,%eax
+  401034:	05 22 02 00 00       	add    $0x222,%eax    //+0x222
+  401039:	eb 05                	jmp    401040 <phase_3+0x8d>
+  40103b:	b8 00 00 00 00       	mov    $0x0,%eax
+  401040:	2d 22 02 00 00       	sub    $0x222,%eax    //-0x222
+  401045:	eb 0a                	jmp    401051 <phase_3+0x9e>
+  401047:	e8 d1 05 00 00       	callq  40161d <explode_bomb>
+  40104c:	b8 00 00 00 00       	mov    $0x0,%eax
+  401051:	83 7c 24 08 05       	cmpl   $0x5,0x8(%rsp)   //do i get this for free?
+  401056:	7f 06                	jg     40105e <phase_3+0xab>
+  401058:	3b 44 24 0c          	cmp    0xc(%rsp),%eax
+  40105c:	74 05                	je     401063 <phase_3+0xb0>
+  40105e:	e8 ba 05 00 00       	callq  40161d <explode_bomb>
+  401063:	48 83 c4 18          	add    $0x18,%rsp
+  401067:	c3                   	retq   
+
+
+
+#include <stdio.h>
+
+void phase_3 (char *inp)
+{
+
+  int arr[ 2 ];
+  int foo = 0;
+
+  sscanf( "inp", "%d %d", &arr[0], &arr[1]);
+
+  if (sizeof(arr) <= 1)
+  {
+    explode_bomb();
+  }
+
+  if (abs(arr[1]) > 7)
+  {
+    explode_bomb();
+  }
+
+  foo = arr[1];
+
+  //whatever the jumpq does goes here
+
+  foo = foo - 928;
+  foo = foo + 238;
+  foo = foo - 546;
+  foo = foo + 546;
+  foo = foo - 546;
+  foo = foo + 546;
+  foo = foo - 546;
+  //foo = 4; 
+  */
+  The commented out code does not seem to be right but it works with the small switch statement.
+  */
+
+  if (arr[1] >= 5)
+  {
+    explode_bomb();
+  }
+
+  switch( arr[0] )
+  {
+    case 'foo' : 
+      break;
+    default  : 
+      explode_bomb();
+  }
+}
+
+
+//////////////////////////////
+I'm a little unsure how switches work in C.  Does the condition have to be "equals" or can it be an ineqality condition?
+From my research... it looks like switches only work with equality conditions.  Thus, I only put the switch in for the last statement.

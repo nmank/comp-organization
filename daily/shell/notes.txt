@@ -1,0 +1,11 @@
+Main function:
+
+
+int execv(const char *path, char *const argv[]);
+	path to the excecutible and arguments
+	we cant to exec in the child
+
+for an array, you need the name of the program to be 0th, and last to be NULL
+
+check for error conditions!
+

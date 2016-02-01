@@ -1,0 +1,198 @@
+0804a2b0 <smooth>:
+ 804a2b0:	e9 4b fe ff ff       	jmp    804a100 <naive_smooth>
+ 804a2b5:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
+ 804a2b9:	8d bc 27 00 00 00 00 	lea    0x0(%edi,%eiz,1),%edi
+
+ 0804a0f0 <rotate>:
+ 804a0f0:	e9 8b ff ff ff       	jmp    804a080 <naive_rotate>
+ 804a0f5:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
+ 804a0f9:	8d bc 27 00 00 00 00 	lea    0x0(%edi,%eiz,1),%edi
+
+ 0804a100 <naive_smooth>:
+ 804a100:	55                   	push   %ebp
+ 804a101:	57                   	push   %edi
+ 804a102:	56                   	push   %esi
+ 804a103:	53                   	push   %ebx
+ 804a104:	83 ec 44             	sub    $0x44,%esp
+ 804a107:	8b 44 24 58          	mov    0x58(%esp),%eax
+ 804a10b:	85 c0                	test   %eax,%eax
+ 804a10d:	0f 8e 84 01 00 00    	jle    804a297 <naive_smooth+0x197>
+ 804a113:	8b 44 24 58          	mov    0x58(%esp),%eax
+ 804a117:	c7 44 24 3c 00 00 00 	movl   $0x0,0x3c(%esp)
+ 804a11e:	00 
+ 804a11f:	83 e8 01             	sub    $0x1,%eax
+ 804a122:	89 44 24 30          	mov    %eax,0x30(%esp)
+ 804a126:	8b 44 24 58          	mov    0x58(%esp),%eax
+ 804a12a:	8d 04 40             	lea    (%eax,%eax,2),%eax
+ 804a12d:	01 c0                	add    %eax,%eax
+ 804a12f:	89 44 24 14          	mov    %eax,0x14(%esp)
+ 804a133:	8b 44 24 60          	mov    0x60(%esp),%eax
+ 804a137:	89 44 24 40          	mov    %eax,0x40(%esp)
+ 804a13b:	83 44 24 3c 01       	addl   $0x1,0x3c(%esp)
+ 804a140:	8b 5c 24 3c          	mov    0x3c(%esp),%ebx
+ 804a144:	8b 7c 24 30          	mov    0x30(%esp),%edi
+ 804a148:	c7 44 24 20 01 00 00 	movl   $0x1,0x20(%esp)
+ 804a14f:	00 
+ 804a150:	89 d8                	mov    %ebx,%eax
+ 804a152:	83 e8 02             	sub    $0x2,%eax
+ 804a155:	89 c6                	mov    %eax,%esi
+ 804a157:	b8 00 00 00 00       	mov    $0x0,%eax
+ 804a15c:	0f 49 c6             	cmovns %esi,%eax
+ 804a15f:	39 fb                	cmp    %edi,%ebx
+ 804a161:	0f 4e fb             	cmovle %ebx,%edi
+ 804a164:	89 44 24 28          	mov    %eax,0x28(%esp)
+ 804a168:	0f af 44 24 58       	imul   0x58(%esp),%eax
+ 804a16d:	89 7c 24 38          	mov    %edi,0x38(%esp)
+ 804a171:	89 44 24 34          	mov    %eax,0x34(%esp)
+ 804a175:	8b 44 24 40          	mov    0x40(%esp),%eax
+ 804a179:	89 44 24 24          	mov    %eax,0x24(%esp)
+ 804a17d:	8d 47 01             	lea    0x1(%edi),%eax
+ 804a180:	89 44 24 18          	mov    %eax,0x18(%esp)
+ 804a184:	8b 44 24 38          	mov    0x38(%esp),%eax
+ 804a188:	39 44 24 28          	cmp    %eax,0x28(%esp)
+ 804a18c:	8b 44 24 20          	mov    0x20(%esp),%eax
+ 804a190:	89 44 24 2c          	mov    %eax,0x2c(%esp)
+ 804a194:	0f 8f 05 01 00 00    	jg     804a29f <naive_smooth+0x19f>
+ 804a19a:	89 c3                	mov    %eax,%ebx
+ 804a19c:	83 eb 02             	sub    $0x2,%ebx
+ 804a19f:	89 de                	mov    %ebx,%esi
+ 804a1a1:	bb 00 00 00 00       	mov    $0x0,%ebx
+ 804a1a6:	0f 49 de             	cmovns %esi,%ebx
+ 804a1a9:	8b 74 24 5c          	mov    0x5c(%esp),%esi
+ 804a1ad:	89 d9                	mov    %ebx,%ecx
+ 804a1af:	89 5c 24 08          	mov    %ebx,0x8(%esp)
+ 804a1b3:	89 c3                	mov    %eax,%ebx
+ 804a1b5:	8b 44 24 30          	mov    0x30(%esp),%eax
+ 804a1b9:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+ 804a1c0:	00 
+ 804a1c1:	39 c3                	cmp    %eax,%ebx
+ 804a1c3:	0f 4e c3             	cmovle %ebx,%eax
+ 804a1c6:	31 db                	xor    %ebx,%ebx
+ 804a1c8:	89 c7                	mov    %eax,%edi
+ 804a1ca:	89 44 24 0c          	mov    %eax,0xc(%esp)
+ 804a1ce:	8b 44 24 34          	mov    0x34(%esp),%eax
+ 804a1d2:	01 c8                	add    %ecx,%eax
+ 804a1d4:	8d 04 40             	lea    (%eax,%eax,2),%eax
+ 804a1d7:	8d 2c 46             	lea    (%esi,%eax,2),%ebp
+ 804a1da:	89 f8                	mov    %edi,%eax
+ 804a1dc:	29 c8                	sub    %ecx,%eax
+ 804a1de:	83 c7 01             	add    $0x1,%edi
+ 804a1e1:	8d 14 40             	lea    (%eax,%eax,2),%edx
+ 804a1e4:	8b 44 24 28          	mov    0x28(%esp),%eax
+ 804a1e8:	31 f6                	xor    %esi,%esi
+ 804a1ea:	89 7c 24 10          	mov    %edi,0x10(%esp)
+ 804a1ee:	8d 54 12 06          	lea    0x6(%edx,%edx,1),%edx
+ 804a1f2:	29 4c 24 10          	sub    %ecx,0x10(%esp)
+ 804a1f6:	89 04 24             	mov    %eax,(%esp)
+ 804a1f9:	31 c0                	xor    %eax,%eax
+ 804a1fb:	89 54 24 1c          	mov    %edx,0x1c(%esp)
+ 804a1ff:	90                   	nop
+ 804a200:	8b 7c 24 0c          	mov    0xc(%esp),%edi
+ 804a204:	39 7c 24 08          	cmp    %edi,0x8(%esp)
+ 804a208:	7f 2e                	jg     804a238 <naive_smooth+0x138>
+ 804a20a:	8b 7c 24 1c          	mov    0x1c(%esp),%edi
+ 804a20e:	89 ea                	mov    %ebp,%edx
+ 804a210:	01 ef                	add    %ebp,%edi
+ 804a212:	8d b6 00 00 00 00    	lea    0x0(%esi),%esi
+ 804a218:	0f b7 0a             	movzwl (%edx),%ecx
+ 804a21b:	83 c2 06             	add    $0x6,%edx
+ 804a21e:	01 c8                	add    %ecx,%eax
+ 804a220:	0f b7 4a fc          	movzwl -0x4(%edx),%ecx
+ 804a224:	01 ce                	add    %ecx,%esi
+ 804a226:	0f b7 4a fe          	movzwl -0x2(%edx),%ecx
+ 804a22a:	01 cb                	add    %ecx,%ebx
+ 804a22c:	39 fa                	cmp    %edi,%edx
+ 804a22e:	75 e8                	jne    804a218 <naive_smooth+0x118>
+ 804a230:	8b 7c 24 10          	mov    0x10(%esp),%edi
+ 804a234:	01 7c 24 04          	add    %edi,0x4(%esp)
+ 804a238:	83 04 24 01          	addl   $0x1,(%esp)
+ 804a23c:	8b 7c 24 18          	mov    0x18(%esp),%edi
+ 804a240:	03 6c 24 14          	add    0x14(%esp),%ebp
+ 804a244:	39 3c 24             	cmp    %edi,(%esp)
+ 804a247:	75 b7                	jne    804a200 <naive_smooth+0x100>
+ 804a249:	8b 4c 24 04          	mov    0x4(%esp),%ecx
+ 804a24d:	99                   	cltd   
+ 804a24e:	8b 7c 24 24          	mov    0x24(%esp),%edi
+ 804a252:	83 44 24 20 01       	addl   $0x1,0x20(%esp)
+ 804a257:	83 44 24 24 06       	addl   $0x6,0x24(%esp)
+ 804a25c:	f7 f9                	idiv   %ecx
+ 804a25e:	66 89 07             	mov    %ax,(%edi)
+ 804a261:	89 f0                	mov    %esi,%eax
+ 804a263:	99                   	cltd   
+ 804a264:	f7 f9                	idiv   %ecx
+ 804a266:	66 89 47 02          	mov    %ax,0x2(%edi)
+ 804a26a:	89 d8                	mov    %ebx,%eax
+ 804a26c:	99                   	cltd   
+ 804a26d:	f7 f9                	idiv   %ecx
+ 804a26f:	66 89 47 04          	mov    %ax,0x4(%edi)
+ 804a273:	8b 44 24 2c          	mov    0x2c(%esp),%eax
+ 804a277:	39 44 24 58          	cmp    %eax,0x58(%esp)
+ 804a27b:	0f 8f 03 ff ff ff    	jg     804a184 <naive_smooth+0x84>
+ 804a281:	8b 44 24 14          	mov    0x14(%esp),%eax
+ 804a285:	01 44 24 40          	add    %eax,0x40(%esp)
+ 804a289:	8b 44 24 3c          	mov    0x3c(%esp),%eax
+ 804a28d:	3b 44 24 58          	cmp    0x58(%esp),%eax
+ 804a291:	0f 85 a4 fe ff ff    	jne    804a13b <naive_smooth+0x3b>
+ 804a297:	83 c4 44             	add    $0x44,%esp
+ 804a29a:	5b                   	pop    %ebx
+ 804a29b:	5e                   	pop    %esi
+ 804a29c:	5f                   	pop    %edi
+ 804a29d:	5d                   	pop    %ebp
+ 804a29e:	c3                   	ret    
+ 804a29f:	31 db                	xor    %ebx,%ebx
+ 804a2a1:	31 f6                	xor    %esi,%esi
+ 804a2a3:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+ 804a2aa:	00 
+ 804a2ab:	31 c0                	xor    %eax,%eax
+ 804a2ad:	eb 9a                	jmp    804a249 <naive_smooth+0x149>
+ 804a2af:	90                   	nop
+
+
+
+
+0804a080 <naive_rotate>:
+ 804a080:	55                   	push   %ebp
+ 804a081:	57                   	push   %edi
+ 804a082:	56                   	push   %esi
+ 804a083:	53                   	push   %ebx
+ 804a084:	83 ec 04             	sub    $0x4,%esp
+ 804a087:	8b 44 24 18          	mov    0x18(%esp),%eax
+ 804a08b:	85 c0                	test   %eax,%eax
+ 804a08d:	7e 59                	jle    804a0e8 <naive_rotate+0x68>
+ 804a08f:	8b 44 24 18          	mov    0x18(%esp),%eax
+ 804a093:	31 ff                	xor    %edi,%edi
+ 804a095:	8b 4c 24 1c          	mov    0x1c(%esp),%ecx
+ 804a099:	83 e8 01             	sub    $0x1,%eax
+ 804a09c:	0f af 44 24 18       	imul   0x18(%esp),%eax
+ 804a0a1:	8d 14 40             	lea    (%eax,%eax,2),%edx
+ 804a0a4:	8b 44 24 20          	mov    0x20(%esp),%eax
+ 804a0a8:	8d 2c 50             	lea    (%eax,%edx,2),%ebp
+ 804a0ab:	8b 44 24 18          	mov    0x18(%esp),%eax
+ 804a0af:	6b f0 fa             	imul   $0xfffffffa,%eax,%esi
+ 804a0b2:	8d 1c 40             	lea    (%eax,%eax,2),%ebx
+ 804a0b5:	01 db                	add    %ebx,%ebx
+ 804a0b7:	90                   	nop
+ 804a0b8:	89 ea                	mov    %ebp,%edx
+ 804a0ba:	31 c0                	xor    %eax,%eax
+ 804a0bc:	89 3c 24             	mov    %edi,(%esp)
+ 804a0bf:	90                   	nop
+ 804a0c0:	8b 3c 01             	mov    (%ecx,%eax,1),%edi
+ 804a0c3:	89 3a                	mov    %edi,(%edx)
+ 804a0c5:	0f b7 7c 01 04       	movzwl 0x4(%ecx,%eax,1),%edi
+ 804a0ca:	83 c0 06             	add    $0x6,%eax
+ 804a0cd:	66 89 7a 04          	mov    %di,0x4(%edx)
+ 804a0d1:	01 f2                	add    %esi,%edx
+ 804a0d3:	39 c3                	cmp    %eax,%ebx
+ 804a0d5:	75 e9                	jne    804a0c0 <naive_rotate+0x40>
+ 804a0d7:	8b 3c 24             	mov    (%esp),%edi
+ 804a0da:	83 c5 06             	add    $0x6,%ebp
+ 804a0dd:	01 d9                	add    %ebx,%ecx
+ 804a0df:	83 c7 01             	add    $0x1,%edi
+ 804a0e2:	3b 7c 24 18          	cmp    0x18(%esp),%edi
+ 804a0e6:	75 d0                	jne    804a0b8 <naive_rotate+0x38>
+ 804a0e8:	83 c4 04             	add    $0x4,%esp
+ 804a0eb:	5b                   	pop    %ebx
+ 804a0ec:	5e                   	pop    %esi
+ 804a0ed:	5f                   	pop    %edi
+ 804a0ee:	5d                   	pop    %ebp
+ 804a0ef:	c3                   	ret    

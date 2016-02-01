@@ -1,0 +1,110 @@
+start before phase_5
+
+*0x0000000000400f0f
+
+
+phase_5 is arrays
+
+0x00000000004010f1 <+0>:	push   %rbx
+   0x00000000004010f2 <+1>:	    sub    $0x10,%rsp
+   0x00000000004010f6 <+5>:		mov    %rdi,%rbx
+   0x00000000004010f9 <+8>:		mov    %fs:0x28,%rax
+   0x0000000000401102 <+17>:	mov    %rax,0x8(%rsp)
+   0x0000000000401107 <+22>:	xor    %eax,%eax
+   0x0000000000401109 <+24>:	callq  0x40136b <string_length>         //returns the length of the string and stores in eax
+   0x000000000040110e <+29>:	cmp    $0x6,%eax						//see if the string length is 6
+   0x0000000000401111 <+32>:	je     0x401152 <phase_5+97>			
+   0x0000000000401113 <+34>:	callq  0x40161d <explode_bomb>
+   0x0000000000401118 <+39>:	jmp    0x401152 <phase_5+97>
+   0x000000000040111a <+41>:	movzbl (%rbx,%rax,1),%edx				//add rbx to rax and store at edx
+   0x000000000040111e <+45>:	and    $0xf,%edx						//and mask edx with a 1111 (get first four digits)
+   0x0000000000401121 <+48>:	movzbl 0x4026c0(%rdx),%edx				//multiply rdx by 0x4026c0 and store in edx (taking a byte and putting it in as a long (4 bytes))
+   0x0000000000401128 <+55>:	mov    %dl,(%rsp,%rax,1)				//put dl in rsp+rax
+   0x000000000040112b <+58>:	add    $0x1,%rax						//add one to rax
+   0x000000000040112f <+62>:	cmp    $0x6,%rax						//compare 6 to rax
+   0x0000000000401133 <+66>:	jne    0x40111a <phase_5+41>			//jump if 6 is not rax
+   0x0000000000401135 <+68>:	movb   $0x0,0x6(%rsp)					//move one byte 0 into rsp+6 (means move one byte)
+   0x000000000040113a <+73>:	mov    $0x40266e,%esi					//move 0x40266e into esi
+   0x000000000040113f <+78>:	mov    %rsp,%rdi						//move rsp to rdi
+   0x0000000000401142 <+81>:	callq  0x401388 <strings_not_equal>     //call strings not equal
+   0x0000000000401147 <+86>:	test   %eax,%eax						//return 1 if eax is zero
+   0x0000000000401149 <+88>:	je     0x401159 <phase_5+104>			//only jump is eax is zero
+   0x000000000040114b <+90>:	callq  0x40161d <explode_bomb>
+   0x0000000000401150 <+95>:	jmp    0x401159 <phase_5+104>			
+   0x0000000000401152 <+97>:	mov    $0x0,%eax						//move 0 into eax
+   0x0000000000401157 <+102>:	jmp    0x40111a <phase_5+41>
+   0x0000000000401159 <+104>:	mov    0x8(%rsp),%rax					//move whatever is in 8+rsp into rax
+   0x000000000040115e <+109>:	xor    %fs:0x28,%rax					//xor rax with itself
+   0x0000000000401167 <+118>:	je     0x40116e <phase_5+125>			//
+   0x0000000000401169 <+120>:	callq  0x400ba0 <__stack_chk_fail@plt>	//the compiler is worried that bad things will happen
+   0x000000000040116e <+125>:	add    $0x10,%rsp
+   0x0000000000401172 <+129>:	pop    %rbx
+   0x0000000000401173 <+130>:	retq 
+
+000000000040136b <string_length>:			//strings in c end in a zero character so this just goes to the zero character
+  40136b:	80 3f 00             	cmpb   $0x0,(%rdi)
+  40136e:	74 12                	je     401382 <string_length+0x17>
+  401370:	48 89 fa             	mov    %rdi,%rdx
+  401373:	48 83 c2 01          	add    $0x1,%rdx
+  401377:	89 d0                	mov    %edx,%eax
+  401379:	29 f8                	sub    %edi,%eax
+  40137b:	80 3a 00             	cmpb   $0x0,(%rdx)
+  40137e:	75 f3                	jne    401373 <string_length+0x8>
+  401380:	f3 c3                	repz retq 
+  401382:	b8 00 00 00 00       	mov    $0x0,%eax
+  401387:	c3                   	retq  
+
+
+
+
+
+41 = A
+61 = a
+
+maduiersnfotvbyl
+
+////////////////////////////////////
+Extra Notes
+
+JUMPQ ask again!
+
+jmpq   *0x402680(,%rax,8)
+
+x/7xg 0x402680
+
+then go to the rax'th one 
+
+
+__stack_chk_fail@plt:
+	it avoids putting things in the wrong spot
+	detects when we overwrite things in memory
+
+
+KEY POINTZ:
+	print "print the number"
+	x think of the number as an address and go to memory at that address and print what you find there
+	move: parenthesis: do the math, then go to memory
+	lea: parenthesis does math on the value stored in the register
+	To skip: set $rip = the address
+	set: command can change registers and memory locations
+	nopw and nopd: "no-op" they can be used to create 'nop sleds'
+	xchg: is a "no-op"
+	movzbl: read a single byte then stick on a bunch of zeroes to pad it
+	cltq: taking in a 4 byte and making an 8 byte
+
+swap a and b:
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+
+
+phase_6 linked list
+
+
+
+typedef struct nodeStruct
+{
+	int value;
+	int index;
+	struct nodeStruct *next;
+} listNode;

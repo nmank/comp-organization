@@ -1,0 +1,110 @@
+PHASE_1
+   0x0000000000400f50 <+0>:	sub    $0x8,%rsp						//call frame management
+   0x0000000000400f54 <+4>:	mov    $0x402610,%esi					//preparing the 2nd parameter to s_n_e
+   0x0000000000400f59 <+9>:	callq  0x401388 <strings_not_equal>		//what to excecute next then where to come back to
+   0x0000000000400f5e <+14>:	test   %eax,%eax					//is the thing stored in this location zero?
+   0x0000000000400f60 <+16>:	je     0x400f67 <phase_1+23>		//jump is always preceded by a test or comp (if s_n_e returns 0, then jump over explode)
+   0x0000000000400f62 <+18>:	callq  0x40161d <explode_bomb>
+   0x0000000000400f67 <+23>:	add    $0x8,%rsp
+   0x0000000000400f6b <+27>:	retq
+
+C code:
+
+char *answer = "Silly quote"
+
+int phase_1(char *inp ) {
+	int x = strings_not_equal( int, answer);
+	if( !x ) {
+		explode_bomb();
+	}
+}
+
+
+PHASE_2
+0000000000400f6c <phase_2>:
+  400f6c:	55                   	push   %rbp			//push rbp onto the stack
+  400f6d:	53                   	push   %rbx			//push rbx onto the stack
+  400f6e:	48 83 ec 28          	sub    $0x28,%rsp	//subtract 28 from rsp to make space on the stack
+  400f72:	48 89 e6             	mov    %rsp,%rsi 	//put rsp at rsi (passes a pointer to it)
+  400f75:	e8 d9 06 00 00       	callq  401653 <read_six_numbers>	//input string is at rdi
+  400f7a:	83 3c 24 01          	cmpl   $0x1,(%rsp)
+  400f7e:	74 20                	je     400fa0 <phase_2+0x34>
+  400f80:	e8 98 06 00 00       	callq  40161d <explode_bomb>
+  400f85:	eb 19                	jmp    400fa0 <phase_2+0x34>
+  400f87:	8b 43 fc             	mov    -0x4(%rbx),%eax
+  400f8a:	01 c0                	add    %eax,%eax
+  400f8c:	39 03                	cmp    %eax,(%rbx)
+  400f8e:	74 05                	je     400f95 <phase_2+0x29>
+  400f90:	e8 88 06 00 00       	callq  40161d <explode_bomb>
+  400f95:	48 83 c3 04          	add    $0x4,%rbx				//WE ARE LEFT HERE
+  400f99:	48 39 eb             	cmp    %rbp,%rbx
+  400f9c:	75 e9                	jne    400f87 <phase_2+0x1b>
+  400f9e:	eb 0c                	jmp    400fac <phase_2+0x40>
+  400fa0:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx
+  400fa5:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp
+  400faa:	eb db                	jmp    400f87 <phase_2+0x1b>
+  400fac:	48 83 c4 28          	add    $0x28,%rsp
+  400fb0:	5b                   	pop    %rbx
+  400fb1:	5d                   	pop    %rbp
+  400fb2:	c3                   	retq
+
+  0000000000401653 <read_six_numbers>:
+  401653:	48 83 ec 18          	sub    $0x18,%rsp
+  401657:	48 89 f2             	mov    %rsi,%rdx  //rsi is still a pointer to an array of six things, rsi is moved to rdx (is a parameter to scanf)
+  40165a:	48 8d 4e 04          	lea    0x4(%rsi),%rcx	//take the address at rsi, plus 4, result in rcx
+  40165e:	48 8d 46 14          	lea    0x14(%rsi),%rax  //0x14(%rsi) -> 0x8(%rsp)
+  401662:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+  401667:	48 8d 46 10          	lea    0x10(%rsi),%rax
+  40166b:	48 89 04 24          	mov    %rax,(%rsp)
+  40166f:	4c 8d 4e 0c          	lea    0xc(%rsi),%r9
+  401673:	4c 8d 46 08          	lea    0x8(%rsi),%r8
+  401677:	be d9 28 40 00       	mov    $0x4028d9,%esi
+  40167c:	b8 00 00 00 00       	mov    $0x0,%eax
+  401681:	e8 ea f5 ff ff       	callq  400c70 <__isoc99_sscanf@plt> //call to sscanf from standard c library so "man sscanf" in terminal to figure out what it is
+  401686:	83 f8 05             	cmp    $0x5,%eax
+  401689:	7f 05                	jg     401690 <read_six_numbers+0x3d>  //IF THE SECOND OPERAND IS "NUMONIC" FIRST THEN DO JUMP
+  40168b:	e8 8d ff ff ff       	callq  40161d <explode_bomb>
+  401690:	48 83 c4 18          	add    $0x18,%rsp
+  401694:	c3                   	retq   
+
+
+type man sscanf
+
+"it plunks things into spots"
+
+int x;
+float y;
+sscanf( "142 4.2", "%d %f", &x, &y); //& takes the address of a number
+
+//this returns the number of things that it plunked into spots for you
+
+
+void phase_2( char *inp )
+{
+	int arr[ 6 ];
+	read_six_numbers( inp, &arr );
+}
+
+void read_six_numbers( char *inp, int *arr )
+{
+	sscanf( inp, "%d %d %d %d %d %d", &arr[0], &arr[1], and to &arr[5] );
+}
+
+
+PHASE 3:
+int main()
+{
+	switch( ??? )
+	{
+		case 4:
+		...
+		case 5:
+		...
+		default:
+		...
+	}
+}
+j*operand go look up in memory at operand and find at operand where to got to next there
+
+PHASE 4:
+recursive function

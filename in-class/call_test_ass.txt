@@ -1,0 +1,63 @@
+0000000000000000 <fun1>:
+   0: 55                    push   %rbp
+   1: 48 89 e5              mov    %rsp,%rbp
+   4: 89 7d fc              mov    %edi,-0x4(%rbp)
+   7: 89 75 f8              mov    %esi,-0x8(%rbp)
+   a: 89 55 f4              mov    %edx,-0xc(%rbp)
+   d: 89 4d f0              mov    %ecx,-0x10(%rbp)
+  10: 44 89 45 ec           mov    %r8d,-0x14(%rbp)
+  14: 44 89 4d e8           mov    %r9d,-0x18(%rbp)
+  18: 8b 45 f8              mov    -0x8(%rbp),%eax
+  1b: 8b 55 fc              mov    -0x4(%rbp),%edx
+  1e: 01 c2                 add    %eax,%edx
+  20: 8b 45 f4              mov    -0xc(%rbp),%eax
+  23: 01 c2                 add    %eax,%edx
+  25: 8b 45 f0              mov    -0x10(%rbp),%eax
+  28: 01 c2                 add    %eax,%edx
+  2a: 8b 45 ec              mov    -0x14(%rbp),%eax
+  2d: 01 c2                 add    %eax,%edx
+  2f: 8b 45 e8              mov    -0x18(%rbp),%eax
+  32: 01 c2                 add    %eax,%edx
+  34: 8b 45 10              mov    0x10(%rbp),%eax
+  37: 01 d0                 add    %edx,%eax
+  39: f2 0f 2a c0           cvtsi2sd %eax,%xmm0
+  3d: f2 0f 10 4d 18        movsd  0x18(%rbp),%xmm1
+  42: f2 0f 58 c1           addsd  %xmm1,%xmm0
+  46: f2 0f 10 4d 20        movsd  0x20(%rbp),%xmm1
+  4b: f2 0f 58 c1           addsd  %xmm1,%xmm0
+  4f: f2 0f 10 4d 28        movsd  0x28(%rbp),%xmm1
+  54: f2 0f 58 c1           addsd  %xmm1,%xmm0
+  58: f2 0f 2c c0           cvttsd2si %xmm0,%eax
+  5c: 5d                    pop    %rbp
+  5d: c3                    retq   
+
+000000000000005e <fun2>:
+  5e: 55                    push   %rbp
+  5f: 48 89 e5              mov    %rsp,%rbp
+  62: 48 83 ec 50           sub    $0x50,%rsp
+  66: 48 b8 00 00 00 00 00  movabs $0x3ff0000000000000,%rax
+  6d: 00 f0 3f 
+  70: 48 89 45 e0           mov    %rax,-0x20(%rbp)
+  74: 48 b8 00 00 00 00 00  movabs $0x4000000000000000,%rax
+  7b: 00 00 40 
+  7e: 48 89 45 e8           mov    %rax,-0x18(%rbp)
+  82: 48 b8 00 00 00 00 00  movabs $0x4008000000000000,%rax
+  89: 00 08 40 
+  8c: 48 89 45 f0           mov    %rax,-0x10(%rbp)
+  90: 48 8b 45 e0           mov    -0x20(%rbp),%rax
+  94: 48 89 44 24 08        mov    %rax,0x8(%rsp)
+  99: 48 8b 45 e8           mov    -0x18(%rbp),%rax
+  9d: 48 89 44 24 10        mov    %rax,0x10(%rsp)
+  a2: 48 8b 45 f0           mov    -0x10(%rbp),%rax
+  a6: 48 89 44 24 18        mov    %rax,0x18(%rsp)
+  ab: c7 04 24 07 00 00 00  movl   $0x7,(%rsp)
+  b2: 41 b9 06 00 00 00     mov    $0x6,%r9d
+  b8: 41 b8 05 00 00 00     mov    $0x5,%r8d
+  be: b9 04 00 00 00        mov    $0x4,%ecx
+  c3: ba 03 00 00 00        mov    $0x3,%edx
+  c8: be 02 00 00 00        mov    $0x2,%esi
+  cd: bf 01 00 00 00        mov    $0x1,%edi
+  d2: e8 00 00 00 00        callq  d7 <fun2+0x79>
+  d7: 89 45 dc              mov    %eax,-0x24(%rbp)
+  da: c9                    leaveq 
+  db: c3                    retq 

@@ -1,0 +1,95 @@
+0000000000401174 <phase_6>:
+  401174:	41 55                	push   %r13
+  401176:	41 54                	push   %r12
+  401178:	55                   	push   %rbp
+  401179:	53                   	push   %rbx
+  40117a:	48 83 ec 58          	sub    $0x58,%rsp
+  40117e:	48 89 e6             	mov    %rsp,%rsi
+  401181:	e8 cd 04 00 00       	callq  401653 <read_six_numbers>
+  401186:	49 89 e5             	mov    %rsp,%r13        //rsp is the first input element
+  401189:	41 bc 00 00 00 00    	mov    $0x0,%r12d
+  40118f:	4c 89 ed             	mov    %r13,%rbp        //move register r13 into rbp
+  401192:	41 8b 45 00          	mov    0x0(%r13),%eax   //get the value at r13 into eax
+  401196:	83 e8 01             	sub    $0x1,%eax        //subtract 1 from eax
+  401199:	83 f8 05             	cmp    $0x5,%eax        //see if eax is 5 (so first number is 6 or less)
+  40119c:	76 05                	jbe    4011a3 <phase_6+0x2f>   //jump is eax<5
+  40119e:	e8 7a 04 00 00       	callq  40161d <explode_bomb>
+  4011a3:	41 83 c4 01          	add    $0x1,%r12d       //add 1 to r12d zero
+  4011a7:	41 83 fc 06          	cmp    $0x6,%r12d       //compare 6 to r12d
+  4011ab:	75 07                	jne    4011b4 <phase_6+0x40>
+  4011ad:	be 00 00 00 00       	mov    $0x0,%esi
+  4011b2:	eb 42                	jmp    4011f6 <phase_6+0x82> //we get there when r12 = 6
+  4011b4:	44 89 e3             	mov    %r12d,%ebx       //move rd12 to ebx (=1)
+  4011b7:	48 63 c3             	movslq %ebx,%rax        //move ebx to rax (=1) / now rax is 2
+  4011ba:	8b 04 84             	mov    (%rsp,%rax,4),%eax   //rsp + 4 to eax / 2 times 4 
+  4011bd:	39 45 00             	cmp    %eax,0x0(%rbp)       //compare eax to rbp (=first input)
+  4011c0:	75 05                	jne    4011c7 <phase_6+0x53>    //NO DUPLICATES OF THE FIRST
+  4011c2:	e8 56 04 00 00       	callq  40161d <explode_bomb>
+  4011c7:	83 c3 01             	add    $0x1,%ebx      //add one to ebx (=2)
+  4011ca:	83 fb 05             	cmp    $0x5,%ebx      //compare it to 5
+  4011cd:	7e e8                	jle    4011b7 <phase_6+0x43>  //ebx is 6 when we miss this
+  4011cf:	49 83 c5 04          	add    $0x4,%r13      //add 4 to r13 (=input + 4)
+  4011d3:	eb ba                	jmp    40118f <phase_6+0x1b>  //NO DUPLICATES.
+  4011d5:	48 8b 52 08          	mov    0x8(%rdx),%rdx
+  4011d9:	83 c0 01             	add    $0x1,%eax
+  4011dc:	39 c8                	cmp    %ecx,%eax
+  4011de:	75 f5                	jne    4011d5 <phase_6+0x61>
+  4011e0:	eb 05                	jmp    4011e7 <phase_6+0x73>
+  4011e2:	ba f0 42 60 00       	mov    $0x6042f0,%edx
+  4011e7:	48 89 54 74 20       	mov    %rdx,0x20(%rsp,%rsi,2)
+  4011ec:	48 83 c6 04          	add    $0x4,%rsi
+  4011f0:	48 83 fe 18          	cmp    $0x18,%rsi
+  4011f4:	74 14                	je     40120a <phase_6+0x96>   //runs six times (mayhaps creating said linked list)
+  4011f6:	8b 0c 34             	mov    (%rsp,%rsi,1),%ecx       //rsi is zero
+  4011f9:	83 f9 01             	cmp    $0x1,%ecx
+  4011fc:	7e e4                	jle    4011e2 <phase_6+0x6e>    //only jump is first input is 1
+  4011fe:	b8 01 00 00 00       	mov    $0x1,%eax
+  401203:	ba f0 42 60 00       	mov    $0x6042f0,%edx
+  401208:	eb cb                	jmp    4011d5 <phase_6+0x61>
+  40120a:	48 8b 5c 24 20       	mov    0x20(%rsp),%rbx    //value for third element
+  40120f:	48 8d 44 24 28       	lea    0x28(%rsp),%rax    //pointer to the 4th element
+  401214:	48 8d 74 24 50       	lea    0x50(%rsp),%rsi    //value of the 6th element
+  401219:	48 89 d9             	mov    %rbx,%rcx          //rcx is value for third
+  40121c:	48 8b 10             	mov    (%rax),%rdx        //value of the 4th element
+  40121f:	48 89 51 08          	mov    %rdx,0x8(%rcx)     //NOT SURE
+  401223:	48 83 c0 08          	add    $0x8,%rax          //value for the 5th
+  401227:	48 39 f0             	cmp    %rsi,%rax          
+  40122a:	74 05                	je     401231 <phase_6+0xbd> //jump if 5th is the same as the 6th
+  40122c:	48 89 d1             	mov    %rdx,%rcx
+  40122f:	eb eb                	jmp    40121c <phase_6+0xa8> //loops till the end (mayhaps pointer control)
+  401231:	48 c7 42 08 00 00 00 	movq   $0x0,0x8(%rdx)   //NOT SURE
+  401238:	00 
+  401239:	bd 05 00 00 00       	mov    $0x5,%ebp
+  40123e:	48 8b 43 08          	mov    0x8(%rbx),%rax   //pointer in the third element
+  401242:	8b 00                	mov    (%rax),%eax      //eax is the value for the 4th
+  401244:	39 03                	cmp    %eax,(%rbx)      //third is less than 4th
+  401246:	7d 05                	jge    40124d <phase_6+0xd9>
+  401248:	e8 d0 03 00 00       	callq  40161d <explode_bomb>
+  40124d:	48 8b 5b 08          	mov    0x8(%rbx),%rbx   //pointer in the third element
+  401251:	83 ed 01             	sub    $0x1,%ebp        //ebp is 4
+  401254:	75 e8                	jne    40123e <phase_6+0xca>
+  401256:	48 83 c4 58          	add    $0x58,%rsp
+  40125a:	5b                   	pop    %rbx
+  40125b:	5d                   	pop    %rbp
+  40125c:	41 5c                	pop    %r12
+  40125e:	41 5d                	pop    %r13
+  401260:	c3                   	retq   
+
+
+  0000000000401653 <read_six_numbers>:
+  401653: 48 83 ec 18           sub    $0x18,%rsp
+  401657: 48 89 f2              mov    %rsi,%rdx  //rsi is still a pointer to an array of six things, rsi is moved to rdx (is a parameter to scanf)
+  40165a: 48 8d 4e 04           lea    0x4(%rsi),%rcx //take the address at rsi, plus 4, result in rcx
+  40165e: 48 8d 46 14           lea    0x14(%rsi),%rax  //0x14(%rsi) -> 0x8(%rsp)
+  401662: 48 89 44 24 08        mov    %rax,0x8(%rsp)
+  401667: 48 8d 46 10           lea    0x10(%rsi),%rax
+  40166b: 48 89 04 24           mov    %rax,(%rsp)
+  40166f: 4c 8d 4e 0c           lea    0xc(%rsi),%r9
+  401673: 4c 8d 46 08           lea    0x8(%rsi),%r8
+  401677: be d9 28 40 00        mov    $0x4028d9,%esi
+  40167c: b8 00 00 00 00        mov    $0x0,%eax
+  401681: e8 ea f5 ff ff        callq  400c70 <__isoc99_sscanf@plt> //call to sscanf from standard c library so "man sscanf" in terminal to figure out what it is
+  401686: 83 f8 05              cmp    $0x5,%eax
+  401689: 7f 05                 jg     401690 <read_six_numbers+0x3d>  //IF THE SECOND OPERAND IS "NUMONIC" FIRST THEN DO JUMP
+  40168b: e8 8d ff ff ff        callq  40161d <explode_bomb>
+  401690: 48 83 c4 18           add    $0x18,%rsp
