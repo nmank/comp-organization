@@ -178,31 +178,20 @@ void eval(char *cmdline)
             //PARENT    
             if (bg)
             {
-                int ret = addjob(jobs, child, BG, cmdline); //returns an int
+                int aj_success = addjob(jobs, child, BG, cmdline);
+                if (!aj_success)
+                {
+                    //add job failed
+                    printf("%s", "add job failure");
+                    exit(1);
+                }
                 int jid = pid2jid(child);
                 printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
-            }
-            else
-            {
-                /*
-                if (!strcmp(argv[0], "/bin/echo"))
-                {
-                    //dont add /bin/echo to the job list
-                }
-                else {
-                    printf("%s", cmdline);
-                    int ret = addjob(jobs, child, FG, cmdline); //returns an int
-                }
-                */
-                int ret = addjob(jobs, child, FG, cmdline); //returns an int
-                int status;
-                pid_t rc = waitpid( child, &status, 0 );
-                int jdel = deletejob(jobs, child);
-                if ( rc == child )
+                if ( aj_success == child )
                 {
                     //SUCCESS
                 }
-                else if ( rc == -1 )
+                else if ( aj_success == -1 )
                 {
                     //ERROR
                     exit(1);
@@ -212,6 +201,40 @@ void eval(char *cmdline)
                     //NOT SURE
                     exit(1);
                 }
+            }
+            else
+            {
+                int aj_success = addjob(jobs, child, FG, cmdline); //returns an int
+                if (!aj_success)
+                {
+                    //add job failed
+                    printf("%s", "add job failure");
+                    exit(1);
+                }
+                if ( aj_success == child )
+                {
+                    //SUCCESS
+                }
+                else if ( aj_success == -1 )
+                {
+                    //ERROR
+                    exit(1);
+                }
+                else
+                {
+                    //NOT SURE
+                    exit(1);
+                }
+                int status;
+                //PUZZLE: the reaping of foreground children happens twice, in sigchild handler and here...
+                pid_t wpd = waitpid( child, &status, 0 );
+                if (wpd == -1)
+                    {
+                        printf("waitpid failed for foreground\n");
+                        exit(1);
+                    }
+                int jdel = deletejob(jobs, child);
+                
             }
         }
         else if( child < 0 )
@@ -351,8 +374,21 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
-    int status;
-    waitpid(-1, &status, 0);
+    pid_t pid;
+    while ( ( pid = waitpid(-1, NULL, WNOHANG)) > 0 )
+    {
+        int jdel = deletejob(jobs, pid);
+        if (!jdel)
+        {
+            printf("error deleting job\n");
+            exit(1);
+        }
+    }
+    if (pid == -1)
+    {
+        printf("waitpid failed for background, sigchild\n");
+        exit(1);
+    }
     return;
 }
 
@@ -363,6 +399,8 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
+    printf("sigint baby!\n");
+    /*
     pid_t pid = fgpid(jobs);
     if (pid)
     {
@@ -371,13 +409,15 @@ void sigint_handler(int sig)
         int jdel = deletejob(jobs, pid);
         if (jdel)
         {
-            printf("%s [%d] (%d) %s", "Job", jid, pid, "terminated by signal 2\n");
+            printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "terminated by signal", sig, "\n");
         }
     }
     else 
     {
         //no foreground job
     }
+    */
+    //printf("sigint baby!\n");
     return;
 }
 
@@ -388,6 +428,24 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+    printf("sigstop baby!\n");
+    /*
+    pid_t pid = fgpid(jobs);
+    if (pid)
+    {
+        int jid = pid2jid(pid);
+        kill(pid, 3); //NEED TO ADD A STOP SIGNAL TO THE FOREGROUND PROCESS
+        int jdel = deletejob(jobs, pid);
+        if (jdel)
+        {
+            printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "terminated by signal", sig, "\n");
+        }
+    }
+    else 
+    {
+        //no foreground job
+    }
+    */
     return;
 }
 

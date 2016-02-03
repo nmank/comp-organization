@@ -9,3 +9,125 @@ for an array, you need the name of the program to be 0th, and last to be NULL
 
 check for error conditions!
 
+trace files:
+	user input
+
+a quit and ls
+
+built in recognizer
+
+
+
+KILL EXAMPLE
+#include <signal.h>
+	kill(processid, SIGINT)
+
+sends ^C signal
+
+important code:
+
+   /* Install the signal handlers */
+
+    /* These are the ones you will need to implement */
+    Signal(SIGINT,  sigint_handler);   /* ctrl-c */
+    Signal(SIGTSTP, sigtstp_handler);  /* ctrl-z */
+    Signal(SIGCHLD, sigchld_handler);  /* Terminated or stopped child */
+
+    /* This one provides a clean way to kill the shell */
+    Signal(SIGQUIT, sigquit_handler); 
+
+
+
+
+T4:
+#
+# trace04.txt - Run a background job.
+#
+/bin/echo -e tsh> ./myspin 1 \046
+./myspin 1 &
+
+T5:
+record shit in jobs
+
+T6:
+sigint is ^C
+we need to use the sigint handler
+(only 0 or 1 fg process at a time)
+
+T7:
+make fg, make bg
+
+T8:
+make bg, make fg, now stop fg
+^Z 
+
+T9:
+print jobs table (three states stopped, running fg, running bg)
+take a forground process hit ^Z then put it into the background
+
+T10:
+run bg, move to fg %1 is jobid, ^Z (aka TSTP) stop, move to bg, then finish
+
+
+
+
+extra shit
+	//CHILD
+            /*
+            char * stringparams[MAXLINE];
+            int i = 1;
+            while (argv[i] != NULL)
+            {
+                stringparams[i-1] = argv[i];
+                i++;
+            }
+            stringparams[i-1] = NULL;
+            printf("xyz%s - %s", argv[0], stringparams[0]);
+            fflush(stdout);
+            execv(argv[0], stringparams); 
+            */
+
+
+
+
+
+            MASKING STUFF
+
+
+            disabling signal delivery
+                function called sigprocmask
+
+                    sigset_t is a type
+
+
+
+            IN EVAL
+                declare mask of type sigset
+
+                if (sigemptyset(&mask) < 0)
+                    unix_error("sigemtpyset error");
+                if (sigemptyset(&mask, SIGCHILD))
+                    unix_error("sigaddset error");
+                if (sigemptyset(&mask, SIGINT))
+                    unix_error("sigaddset error");
+                if (sigemptyset(&mask,SIGSTEP)
+                    unix_error("sigaddset error");
+                if (sigemptyset(SIGBLOCK, &mask, NULL) < 0)
+                    unix_error("sigpromask error");
+
+
+
+
+
+
+
+
+
+
+
+FORKAGE:
+fork()
+--vfork()
+    rax
+    other registers
+    -> syscall
