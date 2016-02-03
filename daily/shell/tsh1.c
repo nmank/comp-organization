@@ -178,53 +178,13 @@ void eval(char *cmdline)
             //PARENT    
             if (bg)
             {
-                int aj_success = addjob(jobs, child, BG, cmdline);
-                if (!aj_success)
-                {
-                    //add job failed
-                    printf("%s", "add job failure");
-                    exit(1);
-                }
+                int ret = addjob(jobs, child, BG, cmdline); //returns an int
                 int jid = pid2jid(child);
                 printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
-                if ( aj_success == child )
-                {
-                    //SUCCESS
-                }
-                else if ( aj_success == -1 )
-                {
-                    //ERROR
-                    exit(1);
-                }
-                else
-                {
-                    //NOT SURE
-                    exit(1);
-                }
             }
             else
             {
-                int aj_success = addjob(jobs, child, FG, cmdline); //returns an int
-                if (!aj_success)
-                {
-                    //add job failed
-                    printf("%s", "add job failure");
-                    exit(1);
-                }
-                if ( aj_success == child )
-                {
-                    //SUCCESS
-                }
-                else if ( aj_success == -1 )
-                {
-                    //ERROR
-                    exit(1);
-                }
-                else
-                {
-                    //NOT SURE
-                    exit(1);
-                }
+                int ret = addjob(jobs, child, FG, cmdline); //returns an int
                 int status;
                 //chill until it is time
                 while (fgpid(jobs))
@@ -232,7 +192,6 @@ void eval(char *cmdline)
                     sleep(1);
                 }
                 int jdel = deletejob(jobs, child);
-                
             }
         }
         else if( child < 0 )
@@ -243,6 +202,7 @@ void eval(char *cmdline)
         else
         {
             //CHILDS
+            setpgid( 0, 0 );
             if (bg)
             {
                 int rc = execv( argv[0], argv );
@@ -372,6 +332,11 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
+    int status;
+    waitpid(-1, &status, 0);
+    return;
+    /*
+    fflush(stdout);
     pid_t pid;
     while ( ( pid = waitpid(-1, NULL, WNOHANG)) > 0 )
     {
@@ -379,15 +344,18 @@ void sigchld_handler(int sig)
         if (!jdel)
         {
             printf("error deleting job\n");
+            fflush(stdout);
             exit(1);
         }
     }
     if (pid == -1)
     {
         printf("waitpid failed for background, sigchild\n");
+        fflush(stdout);
         exit(1);
     }
     return;
+    */
 }
 
 /* 
@@ -397,8 +365,6 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
-    printf("sigint baby!\n");
-    /*
     pid_t pid = fgpid(jobs);
     if (pid)
     {
@@ -414,8 +380,6 @@ void sigint_handler(int sig)
     {
         //no foreground job
     }
-    */
-    //printf("sigint baby!\n");
     return;
 }
 
@@ -426,24 +390,6 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
-    printf("sigstop baby!\n");
-    /*
-    pid_t pid = fgpid(jobs);
-    if (pid)
-    {
-        int jid = pid2jid(pid);
-        kill(pid, 3); //NEED TO ADD A STOP SIGNAL TO THE FOREGROUND PROCESS
-        int jdel = deletejob(jobs, pid);
-        if (jdel)
-        {
-            printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "terminated by signal", sig, "\n");
-        }
-    }
-    else 
-    {
-        //no foreground job
-    }
-    */
     return;
 }
 

@@ -184,34 +184,8 @@ void eval(char *cmdline)
             }
             else
             {
-                /*
-                if (!strcmp(argv[0], "/bin/echo"))
-                {
-                    //dont add /bin/echo to the job list
-                }
-                else {
-                    printf("%s", cmdline);
-                    int ret = addjob(jobs, child, FG, cmdline); //returns an int
-                }
-                */
                 int ret = addjob(jobs, child, FG, cmdline); //returns an int
-                int status;
-                pid_t rc = waitpid( child, &status, 0 );
-                int jdel = deletejob(jobs, child);
-                if ( rc == child )
-                {
-                    //SUCCESS
-                }
-                else if ( rc == -1 )
-                {
-                    //ERROR
-                    exit(1);
-                }
-                else
-                {
-                    //NOT SURE
-                    exit(1);
-                }
+                waitfg(child);
             }
         }
         else if( child < 0 )
@@ -222,18 +196,10 @@ void eval(char *cmdline)
         else
         {
             //CHILDS
-            if (bg)
-            {
-                int rc = execv( argv[0], argv );
-            }
-            else
-            {   
-                int rc = execv( argv[0], argv );
-
-                //ERROR
-                printf( "execv error %d\n", errno);
-                exit(1);
-            }
+            setpgid( 0, 0 );
+            int rc = execv( argv[0], argv );
+            printf( "execv error %d\n", errno);
+            exit(1);
         }
     }
     return;
@@ -303,6 +269,7 @@ int parseline(const char *cmdline, char **argv)
  */
 int builtin_cmd(char **argv) 
 {
+    //printf("...in builtin\n");
     //buitin command to quit terminal if quit is entered
     if (strcmp( argv[0], "quit" ) == 0 && argv[1] == NULL)
     {
@@ -311,6 +278,11 @@ int builtin_cmd(char **argv)
     else if (strcmp( argv[0], "jobs" ) == 0 && argv[1] == NULL)
     {
         listjobs(jobs);
+        return 1;
+    }
+    else if (strcmp( argv[0], "bg" ) == 0 && argv[1] == NULL)
+    {
+        //whatever it is supposed to do
         return 1;
     }
     else
@@ -335,6 +307,14 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
+    //printf("...in waitfg\n");
+    //chill until it is time
+    while (fgpid(jobs))
+    {
+        //printf("...sleeping\n");
+        fflush(stdout);
+        sleep(1);
+    }
     return;
 }
 
@@ -351,8 +331,55 @@ void waitfg(pid_t pid)
  */
 void sigchld_handler(int sig) 
 {
+    /*
     int status;
     waitpid(-1, &status, 0);
+    return;
+    */
+    
+    //printf("...in sigchild\n");
+    fflush(stdout);
+    int status = 1;
+    pid_t pid;
+    while ( ( pid = waitpid(-1, &status, WNOHANG | WUNTRACED) ) > 0 )
+    {
+        if (WIFSTOPPED(status))
+        {
+            int jid = pid2jid(pid);
+            getjobpid(jobs, pid)->state = ST;
+            printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "stopped by signal", SIGSTOP, "\n");
+        }
+        else
+        {
+            int jid = pid2jid(pid);
+            int jdel = deletejob(jobs, pid);
+            if (jdel)
+            {
+                if (sig != 17)
+                {
+                    printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "terminated by signal", SIGINT, "\n");
+                }
+            }
+            else
+            {
+                printf("error deleting job\n");
+                fflush(stdout);
+                exit(1);
+            }  
+        }
+        
+    }
+    if (pid == -1)
+    {
+        printf("...no processes\n");
+    }
+    else if (pid < -1)
+    {
+        printf("error in sigchild\n");
+        fflush(stdout);
+        exit(1);
+    }
+    
     return;
 }
 
@@ -366,13 +393,7 @@ void sigint_handler(int sig)
     pid_t pid = fgpid(jobs);
     if (pid)
     {
-        int jid = pid2jid(pid);
-        kill(pid, 3);
-        int jdel = deletejob(jobs, pid);
-        if (jdel)
-        {
-            printf("%s [%d] (%d) %s", "Job", jid, pid, "terminated by signal 2\n");
-        }
+        kill(pid, sig);
     }
     else 
     {
@@ -388,6 +409,17 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
+    //printf("...SSTOP!!!\n");
+    pid_t pid = fgpid(jobs);
+    if (pid)
+    {
+        //printf("...foreground job\n");
+        kill(pid, sig);
+    }
+    else 
+    {
+        //no foreground job
+    }
     return;
 }
 

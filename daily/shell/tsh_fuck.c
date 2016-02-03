@@ -226,11 +226,13 @@ void eval(char *cmdline)
                     exit(1);
                 }
                 int status;
-                //chill until it is time
-                while (fgpid(jobs))
-                {
-                    sleep(1);
-                }
+                //PUZZLE: the reaping of foreground children happens twice, in sigchild handler and here...
+                pid_t wpd = waitpid( child, &status, 0 );
+                if (wpd == -1)
+                    {
+                        printf("waitpid failed for foreground\n");
+                        exit(1);
+                    }
                 int jdel = deletejob(jobs, child);
                 
             }
