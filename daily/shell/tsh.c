@@ -180,12 +180,23 @@ void eval(char *cmdline)
             if (bg)
             {
                 int ret = addjob(jobs, child, BG, cmdline); //returns an int
-                int jid = pid2jid(child);
-                printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
+                if (ret)
+                {
+                    int jid = pid2jid(child);
+                    printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
+                }
+                else
+                {
+                    printf("addjobfailed\n");
+                }
             }
             else
             {
                 int ret = addjob(jobs, child, FG, cmdline); //returns an int
+                if (!ret)
+                {
+                    printf("addjobfailed\n");
+                }
                 waitfg(child);
             }
         }
@@ -199,8 +210,11 @@ void eval(char *cmdline)
             //CHILDS
             setpgid( 0, 0 );
             int rc = execv( argv[0], argv );
-            printf( "execv error %d\n", errno);
-            exit(1);
+            if (rc == -1)
+            {
+                printf( "execv error %d\n", errno);
+                exit(1);
+            }
         }
     }
     return;
@@ -300,46 +314,66 @@ void do_bgfg(char **argv)
 {
     //if (strcmp(argv[0],"fg"))
     //{
-        //foreground -> background
-        int i;
-        int j;
-        pid_t pid = 0;
-        int bg = -1;
-
-        for (i = 0; i < MAXJOBS; i++)
-        if (jobs[i].state == ST || jobs[i].state == BG) // looking for stopped jobs
+    //foreground -> background
+    int i;
+    int j;
+    char * arr;
+    int in_jid =0;
+    pid_t pid = 0;
+    int bg = -1;
+    int all = 1;
+    //trying to isolate the %<jobid>
+    if (argv[1])
+    {
+        arr = argv[1];
+        if (arr[1])
         {
-            pid = jobs[i].pid;
-            bg = 0;
-            for (j = 0; jobs[i].cmdline[j] != 0; j++)
+            in_jid = arr[1] - '0';
+            all = 0;
+        }
+    }  
+
+    for (i = 0; i < MAXJOBS; i++)
+    {
+        if (jobs[i].jid == in_jid || all)
+        {
+            if ((jobs[i].state == ST || jobs[i].state == BG)) // looking for stopped jobs, background jobs and eventually look for jobids
             {
-                if (jobs[i].cmdline[j] == '&')
+                pid = jobs[i].pid;
+                bg = 0;
+                for (j = 0; jobs[i].cmdline[j] != 0; j++)
                 {
-                    bg = 1;
+                    if (jobs[i].cmdline[j] == '&')
+                    {
+                        bg = 1;
+                    }
                 }
             }
         }
+    }
 
-            if (bg > 0)
-            {
-                int k = kill(pid, SIGCONT);
-                getjobpid(jobs, pid)->state = FG;
-                if (k == -1)
-                    printf("error in kill\n");
-            }
-            else if (bg == 0)
-            {
-                int k = kill(pid, SIGCONT);
-                getjobpid(jobs, pid)->state = BG;
-                int jid = pid2jid(pid);
-                printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
-                if (k == -1)
-                    printf("error in kill\n");
-            }
-            else
-            {
-                printf("no stopped job\n");
-            }
+    if (bg > 0)
+    {
+        int k = kill(pid, SIGCONT);
+        getjobpid(jobs, pid)->state = FG;
+        waitfg(pid);
+
+        if (k == -1)
+            printf("error in kill\n");
+    }
+    else if (bg == 0)
+    {
+        int k = kill(pid, SIGCONT);
+        getjobpid(jobs, pid)->state = BG;
+        int jid = pid2jid(pid);
+        printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
+        if (k == -1)
+            printf("error in kill\n");
+    }
+    else
+    {
+        printf("fg, bg command failed\n");
+    }
     //}
 /*
     else (!strcmp(argv[0],"bg"))
@@ -406,6 +440,7 @@ void sigchld_handler(int sig)
             {
                 if (sig != 17)
                 {
+                    //printf("MADE IT!\n");
                     printf("%s [%d] (%d) %s %d %s", "Job", jid, pid, "terminated by signal", SIGINT, "\n");
                 }
             }
@@ -439,10 +474,12 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
+    //printf("IN SIGINT");
     pid_t pid = fgpid(jobs);
+    //printf("%d", pid);
     if (pid)
     {
-        kill(pid, sig);
+        kill(-pid, sig);
     }
     else 
     {
@@ -463,7 +500,7 @@ void sigtstp_handler(int sig)
     if (pid)
     {
         //printf("...foreground job\n");
-        kill(pid, sig);
+        kill(-pid, sig);
     }
     else 
     {

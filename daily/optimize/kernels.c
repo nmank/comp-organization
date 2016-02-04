@@ -253,11 +253,13 @@ void rotate4(int dim, pixel *src, pixel *dst)
  * rotate - Your current working version of rotate
  * IMPORTANT: This is the version you will be graded on
  */
+ /*
 char rotate_descr[] = "rotate: Current working version";
 void rotate(int dim, pixel *src, pixel *dst) 
 {
     naive_rotate(dim, src, dst);
 }
+*/
 
 /*********************************************************************
  * register_rotate_functions - Register all of your different versions
@@ -740,6 +742,9 @@ void smooth(int dim, pixel *src, pixel *dst)
         dst[RIDX(i, dim1, dim)] = current_pixel;
     }
 }
+
+
+
 
 
 /********************************************************************* 
