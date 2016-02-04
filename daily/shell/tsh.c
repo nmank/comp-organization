@@ -172,6 +172,7 @@ void eval(char *cmdline)
     if (!rbic)
     {
         pid_t child = fork();
+        //printf("forked\n");
         
         if (child)
         {      
@@ -271,6 +272,7 @@ int builtin_cmd(char **argv)
 {
     //printf("...in builtin\n");
     //buitin command to quit terminal if quit is entered
+    //printf("%s", argv[0]);
     if (strcmp( argv[0], "quit" ) == 0 && argv[1] == NULL)
     {
         exit(0);
@@ -280,9 +282,9 @@ int builtin_cmd(char **argv)
         listjobs(jobs);
         return 1;
     }
-    else if (strcmp( argv[0], "bg" ) == 0 && argv[1] == NULL)
+    else if ((strcmp( argv[0], "fg" ) == 0) || (strcmp( argv[0], "bg" ) == 0))
     {
-        //whatever it is supposed to do
+        do_bgfg(argv);
         return 1;
     }
     else
@@ -296,9 +298,56 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+    //if (strcmp(argv[0],"fg"))
+    //{
+        //foreground -> background
+        int i;
+        int j;
+        pid_t pid = 0;
+        int bg = -1;
 
+        for (i = 0; i < MAXJOBS; i++)
+        if (jobs[i].state == ST || jobs[i].state == BG) // looking for stopped jobs
+        {
+            pid = jobs[i].pid;
+            bg = 0;
+            for (j = 0; jobs[i].cmdline[j] != 0; j++)
+            {
+                if (jobs[i].cmdline[j] == '&')
+                {
+                    bg = 1;
+                }
+            }
+        }
 
-
+            if (bg > 0)
+            {
+                int k = kill(pid, SIGCONT);
+                getjobpid(jobs, pid)->state = FG;
+                if (k == -1)
+                    printf("error in kill\n");
+            }
+            else if (bg == 0)
+            {
+                int k = kill(pid, SIGCONT);
+                getjobpid(jobs, pid)->state = BG;
+                int jid = pid2jid(pid);
+                printf("[%d] (%d) %s", jobs[jid-1].jid, jobs[jid-1].pid, jobs[jid-1].cmdline);
+                if (k == -1)
+                    printf("error in kill\n");
+            }
+            else
+            {
+                printf("no stopped job\n");
+            }
+    //}
+/*
+    else (!strcmp(argv[0],"bg"))
+    {
+        //background -> foreground
+        return;
+    }
+    */
     return;
 }
 
@@ -371,7 +420,7 @@ void sigchld_handler(int sig)
     }
     if (pid == -1)
     {
-        printf("...no processes\n");
+        //printf("...no processes\n");
     }
     else if (pid < -1)
     {
