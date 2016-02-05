@@ -131,3 +131,17 @@ fork()
     rax
     other registers
     -> syscall
+
+
+
+
+SIGCHILD
+
+    -waitpid: lets us know if there is a stopped or zombie processes
+
+    -then we deal with the processes
+
+    -WIFSIGNALED(status) if the job is terminated by uncaught signal
+    -WIFEXITED(status) if the job terminated normally
+
+    -if pid is -1 and errno == ECHILD then there's an error
