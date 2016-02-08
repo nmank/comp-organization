@@ -105,20 +105,17 @@ static void *coalesce(void *bp)
 
     else if (!prev_alloc && next_alloc) /* Case 3 */
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        size += GET_SIZE(pbp);
+        size += GET_SIZE(HDRP(PREV_BLKP(bp)));
         PUT(FTRP(bp), PACK(size, 0));
-        PUT(pbp, PACK(size, 0));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0));
         bp = PREV_BLKP(bp);
     }
 
     else /* Case 4 */ 
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        char * nbp = FTRP(NEXT_BLKP(bp));
-        size += GET_SIZE(pbp) + GET_SIZE(nbp);
-        PUT(pbp, PACK(size, 0)); 
-        PUT(nbp, PACK(size, 0));
+        size += GET_SIZE(HDRP(PREV_BLKP(bp))) + GET_SIZE(FTRP(NEXT_BLKP(bp)));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0)); 
+        PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
         bp = PREV_BLKP(bp);
     }
     

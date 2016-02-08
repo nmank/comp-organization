@@ -48,6 +48,8 @@ team_t team = {
 /* Pack a size and allocated bit into a word */
 #define PACK(size, alloc) ((size) | (alloc))
 
+/* Place address */
+
 /* Read and write a word at address p */
 #define GET(p) (*(unsigned int *)(p)) //cast p as an unsigned int pointer then follow the pointer (convert what is at address p to an unsigned int)
 #define PUT(p, val) (*(unsigned int *)(p) = (val))
@@ -57,8 +59,12 @@ team_t team = {
 #define GET_ALLOC(p) (GET(p) & 0x1)
 
 /* Given block ptr bp, compute address of its header and footer */
-#define HDRP(bp) ((char *)(bp) - WSIZE)
+#define HDRP(bp) ((char *)(bp) - 3*WSIZE)
 #define FTRP(bp) ((char *)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)
+
+/* Give block ptr bp. compute address of pointer to prev and next */
+#define NXTP(bp) ((char *)(bp) - 2*WSIZE)
+#define PRVP(bp) ((char *)(bp) - WSIZE)
 
 /* Given block ptr bp, compute address of next and previous blocks */
 #define NEXT_BLKP(bp) ((char *)(bp) + GET_SIZE(((char *)(bp) - WSIZE)))
@@ -105,20 +111,17 @@ static void *coalesce(void *bp)
 
     else if (!prev_alloc && next_alloc) /* Case 3 */
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        size += GET_SIZE(pbp);
+        size += GET_SIZE(HDRP(PREV_BLKP(bp)));
         PUT(FTRP(bp), PACK(size, 0));
-        PUT(pbp, PACK(size, 0));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0));
         bp = PREV_BLKP(bp);
     }
 
     else /* Case 4 */ 
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        char * nbp = FTRP(NEXT_BLKP(bp));
-        size += GET_SIZE(pbp) + GET_SIZE(nbp);
-        PUT(pbp, PACK(size, 0)); 
-        PUT(nbp, PACK(size, 0));
+        size += GET_SIZE(HDRP(PREV_BLKP(bp))) + GET_SIZE(FTRP(NEXT_BLKP(bp)));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0)); 
+        PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
         bp = PREV_BLKP(bp);
     }
     
@@ -135,6 +138,8 @@ static void *extend_heap(size_t words)
     size = (words % 2) ? (words+1) * WSIZE : words * WSIZE;
     if ((long)(bp = mem_sbrk(size)) == -1)
         return NULL;
+
+    //FIXXX!
 
     /* Initialize free block header/footer and the epilogue header */
     PUT(HDRP(bp), PACK(size, 0)); /* Free block header */
@@ -163,9 +168,11 @@ int mm_init(void)
 
     PUT(heap_listp, 0); /* Alignment padding */
     PUT(heap_listp + (1*WSIZE), PACK(DSIZE, 1)); /* Prologue header */
-    PUT(heap_listp + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */ 
-    PUT(heap_listp + (3*WSIZE), PACK(0, 1)); /* Epilogue header */
-    heap_listp += (2*WSIZE);
+    PUT(heap_listp + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue previous */
+    PUT(heap_listp + (3*WSIZE), PACK(DSIZE, 1)); /* Prologue next */
+    PUT(heap_listp + (4*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */ 
+    PUT(heap_listp + (5*WSIZE), PACK(0, 1)); /* Epilogue header */
+    heap_listp += (4*WSIZE);
 
     /* Extend the empty heap with a free block of CHUNKSIZE bytes */
     if (extend_heap(CHUNKSIZE/WSIZE) == NULL)
@@ -255,15 +262,16 @@ void *mm_realloc(void *ptr, size_t size)
     void *oldptr = ptr;
     void *newptr;
     size_t copySize;
-
+    
     newptr = mm_malloc(size);
     if (newptr == NULL)
       return NULL;
     copySize = GET_SIZE(HDRP(oldptr));
+    printf("%i\n", copySize);
     copySize = MIN(size, copySize);
     memcpy(newptr, oldptr, copySize);
     mm_free(oldptr);
-    return newptr;   
+    return newptr;    
 
     /*Iterate through the headers and footers
     * When we find the right header:

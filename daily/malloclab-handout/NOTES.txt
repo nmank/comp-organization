@@ -62,61 +62,48 @@ explicit free lists have a global variable that points to the first free block a
 
 ERRORS:
 
-	mm.c: In function ‘mm_malloc’:
-	mm.c:184:5: warning: implicit declaration of function ‘find_fit’ [-Wimplicit-function-declaration]
-	     if ((bp = find_fit(asize)) != NULL) {
-	     ^
-	mm.c:184:13: warning: assignment makes pointer from integer without a cast [enabled by default]
-	     if ((bp = find_fit(asize)) != NULL) {
-	             ^
-	mm.c:185:9: warning: implicit declaration of function ‘place’ [-Wimplicit-function-declaration]
-	         place(bp, asize);
-	         ^
-	mm.c: In function ‘mm_free’:
-	mm.c:205:33: error: ‘bp’ undeclared (first use in this function)
-	     size_t size = GET_SIZE(HDRP(bp));
-	                                 ^
-	mm.c:51:35: note: in definition of macro ‘GET’
-	 #define GET(p) (*(unsigned int *)(p)) //cast p as an unsigned int pointer then follow the pointer (convert what is at address p to an unsigned int)
-	                                   ^
-	mm.c:205:19: note: in expansion of macro ‘GET_SIZE’
-	     size_t size = GET_SIZE(HDRP(bp));
-	                   ^
-	mm.c:205:28: note: in expansion of macro ‘HDRP’
-	     size_t size = GET_SIZE(HDRP(bp));
-	                            ^
-	mm.c:205:33: note: each undeclared identifier is reported only once for each function it appears in
-	     size_t size = GET_SIZE(HDRP(bp));
-	                                 ^
-	mm.c:51:35: note: in definition of macro ‘GET’
-	 #define GET(p) (*(unsigned int *)(p)) //cast p as an unsigned int pointer then follow the pointer (convert what is at address p to an unsigned int)
-	                                   ^
-	mm.c:205:19: note: in expansion of macro ‘GET_SIZE’
-	     size_t size = GET_SIZE(HDRP(bp));
-	                   ^
-	mm.c:205:28: note: in expansion of macro ‘HDRP’
-	     size_t size = GET_SIZE(HDRP(bp));
-	                            ^
-	mm.c: In function ‘mm_realloc’:
-	mm.c:224:45: error: ‘SIZE_T_SIZE’ undeclared (first use in this function)
-	     copySize = *(size_t *)((char *)oldptr - SIZE_T_SIZE);
-	                                             ^
-	mm.c: At top level:
-	mm.c:241:14: error: redefinition of ‘coalesce’
-	 static void *coalesce(void *bp)
-	              ^
-	mm.c:67:14: note: previous definition of ‘coalesce’ was here
-	 static void *coalesce(void *bp)
-	              ^
-	mm.c: In function ‘coalesce’:
-	mm.c:52:21: error: called object is not a function or function pointer
-	 #define PUT(p, val) (*(unsigned int *)(p) = (val))
-	                     ^
-	mm.c:267:53: note: in expansion of macro ‘PUT’
-	         PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0)); 37 PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
-	                                                     ^
-	mm.c: At top level:
-	mm.c:241:14: warning: ‘coalesce’ defined but not used [-Wunused-function]
-	 static void *coalesce(void *bp)
-	              ^
-	make: *** [mm.o] Error 1
+printf("IN REALLOC\n");
+    void *oldptr = ptr;
+    void *newptr;
+    size_t copySize;
+    
+    /* if some bozo passes in a null pointer or 0 for size*/
+    if (oldptr == NULL || size == 0)
+        //printf("something weird");
+        return NULL;
+
+    /* If there is enough room in the current block then just use that one */
+    if (size <= GET_SIZE(ptr))
+    {
+        printf("used old pointer %i \n", (int)(oldptr));
+        return ptr;
+    }
+
+    /* We are requesting more memory than is already in the block */
+    else 
+    {
+        //copySize = GET_SIZE(oldptr);
+        copySize = *(size_t *)((char *)oldptr - SIZE_T_SIZE);
+        newptr = mm_malloc(size);
+        printf("input size %i \n", size);
+        printf("copy size %i \n", copySize);
+        printf("%i \n", (int)(oldptr));
+        printf("new ptr %i \n", (int)(newptr));
+        if (copySize > size)
+        {
+            memcpy(oldptr, newptr, size);
+            return newptr;
+        }   
+        memcpy(oldptr, newptr, copySize);
+        mm_free(oldptr);
+        return newptr;
+    }
+
+
+
+    if (MIN(GET_SIZE(HDRP(oldptr)), size) == size)
+    {
+        printf("\n%i, %i, %p \n", GET_SIZE(HDRP(oldptr)), size, oldptr);
+        fflush(stdout);
+        return oldptr;
+    }

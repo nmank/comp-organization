@@ -56,6 +56,10 @@ team_t team = {
 #define GET_SIZE(p) (GET(p) & ~0x7)
 #define GET_ALLOC(p) (GET(p) & 0x1)
 
+/* Compute address of pointer to prev and next */
+#define NXTP(bp) ((char *)(bp) - 2*WSIZE)
+#define PRVP(bp) ((char *)(bp) - WSIZE)
+
 /* Given block ptr bp, compute address of its header and footer */
 #define HDRP(bp) ((char *)(bp) - WSIZE)
 #define FTRP(bp) ((char *)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)
@@ -70,6 +74,7 @@ team_t team = {
 
 /* Global Variables */
 char * heap_listp;
+char * free_ptr;
 
 
 
@@ -77,57 +82,66 @@ static void *find_fit(size_t asize)
 {
     /*first-fit search of the implicit free list */
     void *bp;
-    for (bp = heap_listp; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
-        if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
-            return bp;
+
+    if (free_ptr)
+    {
+        printf("in findfit\n");
+        fflush(stdout);
+        for (bp = free_ptr; PRVP(bp) != NULL; bp = (char *)PRVP(bp))
+        {
+            if (!GET_ALLOC(((char *)(bp) - 3*WSIZE)) && (asize <= GET_SIZE(((char *)(bp) - 3*WSIZE)))) {
+                return bp;
+            }
         }
+    }
+
+    printf("in else\n");
+    for (bp = heap_listp; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
+    if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
+        return bp;
+    }
     }
     return NULL; /* No fit */
 }
 
 static void *coalesce(void *bp)
-{    
+{   
     size_t prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp))); 
     size_t next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));
     size_t size = GET_SIZE(HDRP(bp));
 
-    if (prev_alloc && next_alloc) /* Case 1 */
+    if (!prev_alloc && !next_alloc) 
     {
         return bp;
     }
-
-    else if (prev_alloc && !next_alloc) /* Case 2 */
+    else if (!prev_alloc && next_alloc) 
     {
         size += GET_SIZE(HDRP(NEXT_BLKP(bp)));
-        PUT(HDRP(bp), PACK(size, 0));
-        PUT(FTRP(bp), PACK(size,0));
+        PUT(HDRP(bp), PACK(size, 1));
+        PUT(FTRP(bp), PACK(size, 1));
     }
 
-    else if (!prev_alloc && next_alloc) /* Case 3 */
+    else if (prev_alloc && !next_alloc) 
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        size += GET_SIZE(pbp);
-        PUT(FTRP(bp), PACK(size, 0));
-        PUT(pbp, PACK(size, 0));
+        size += GET_SIZE(HDRP(PREV_BLKP(bp)));
+        PUT(FTRP(bp), PACK(size, 1));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 1));
         bp = PREV_BLKP(bp);
     }
-
-    else /* Case 4 */ 
+    else
     {
-        char * pbp = HDRP(PREV_BLKP(bp));
-        char * nbp = FTRP(NEXT_BLKP(bp));
-        size += GET_SIZE(pbp) + GET_SIZE(nbp);
-        PUT(pbp, PACK(size, 0)); 
-        PUT(nbp, PACK(size, 0));
+        size += GET_SIZE(HDRP(PREV_BLKP(bp))) + GET_SIZE(FTRP(NEXT_BLKP(bp)));
+        PUT(HDRP(PREV_BLKP(bp)), PACK(size, 1)); 
+        PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 1));
         bp = PREV_BLKP(bp);
     }
-    
     return bp;
 }
 
 static void *extend_heap(size_t words)
 {
-    
+
+
     char *bp;
     size_t size; 
 
@@ -139,10 +153,24 @@ static void *extend_heap(size_t words)
     /* Initialize free block header/footer and the epilogue header */
     PUT(HDRP(bp), PACK(size, 0)); /* Free block header */
     PUT(FTRP(bp), PACK(size, 0)); /* Free block footer */
+
+    printf("HERE, %p, %p", free_ptr, bp);
+    fflush(stdout);
+/*
+    *(char *)(NXTP(free_ptr)) = (unsigned int)bp;
+    *(char *)(NXTP(bp)) = 0;
+    *(char *)(PRVP(bp)) = (unsigned int)free_ptr;
+*/
+
+    PUT(HDRP(bp), PACK(size, 0));
+    PUT(FTRP(bp), PACK(size, 0));
+    //free_ptr = (char *) bp;
+
     PUT(HDRP(NEXT_BLKP(bp)), PACK(0, 1)); /* New epilogue header */
 
+    return bp;
     /* Coalesce if the previous block was free */
-    return coalesce(bp);
+    //return coalesce(bp);
 }
 
 
@@ -155,6 +183,7 @@ int mm_init(void)
     * Put in a front 4 bytes (front of the heap)
     * Put in a back 4 bytes (back of the heap)
     */
+
     mem_init();
 
     /* Create the initial empty heap */
@@ -204,6 +233,7 @@ void *mm_malloc(size_t size)
     * If open space then make a header and footer that bracket the space
     * Encode the space size in the header
     */
+
     size_t asize; /* Adjusted block size */
     size_t extendsize; /* Amount to extend heap if no fit */
     char *bp;
@@ -242,9 +272,26 @@ void mm_free(void *bp)
     /*remove the header and footer where the pointer points */
     size_t size = GET_SIZE(HDRP(bp));
     
-    PUT(HDRP(bp), PACK(size, 0));
-    PUT(FTRP(bp), PACK(size, 0));
-    coalesce(bp);
+    if (free_ptr == NULL)
+    {
+        *(unsigned int *)(NXTP(bp)) = 0;
+        *(unsigned int *)(PRVP(bp)) = 0;
+        PUT(HDRP(bp), PACK(size, 0));
+        PUT(FTRP(bp), PACK(size, 0));
+        free_ptr = (char *) bp;
+        //coalesce(bp);
+    }
+    else
+    {
+        /* add to the head */
+        *(char *)(NXTP(bp)) = 0;
+        *(char *)(PRVP(bp)) = (unsigned int)free_ptr;
+        *(char *)(NXTP(free_ptr)) = (unsigned int)bp;
+        PUT(HDRP(bp), PACK(size, 0));
+        PUT(FTRP(bp), PACK(size, 0));
+        free_ptr = (char *) bp;
+        //coalesce(bp);
+    }
 }
 
 /*
@@ -255,7 +302,7 @@ void *mm_realloc(void *ptr, size_t size)
     void *oldptr = ptr;
     void *newptr;
     size_t copySize;
-
+    
     newptr = mm_malloc(size);
     if (newptr == NULL)
       return NULL;
@@ -263,7 +310,7 @@ void *mm_realloc(void *ptr, size_t size)
     copySize = MIN(size, copySize);
     memcpy(newptr, oldptr, copySize);
     mm_free(oldptr);
-    return newptr;   
+    return newptr;    
 
     /*Iterate through the headers and footers
     * When we find the right header:
