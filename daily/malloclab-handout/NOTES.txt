@@ -1,0 +1,122 @@
+pointers:
+	char *xp;
+	*xp = 123;
+
+	* means follow the pointer and change the value it is pointing at to 123.
+
+	struct foo s;
+	struct foo *sp;
+	sp = &s; //what's the address in memory of this thing?
+	s.field = 1.2;
+	sp ->field = 1.7;
+	(*sp).field = 1.7; //the same as ->
+
+	float *fp = (float *) malloc( sizeof (float));
+	*fp = 1.73;
+	int *ip = (*int) fp;
+	int i = *ip;
+
+	what is i pointing to?
+		the bit representation of the float 1.73
+
+	(*(unsigned int *) (p))
+
+
+void pointer is the return type of malloc:
+	what is a void pointer?
+
+char* cp;
+	why char*?
+	char is one byte.  cp-4 gives us the address 4 less than c;
+
+NESTED POINTERS:
+	int j = 7;
+	int i = 4;
+	in *ip = &i; //ip is assigned the address of i
+	int **ipp = &ip; //store ip's address in ipp
+	**ipp = 42; //same thing as saying i = 42
+
+	*ipp = &j; //same as 9 = &j
+
+	we need the double star in ipp's declaring because its a a pointer to a pointer to an int
+
+
+
+
+POINTERS TO NULL:
+	NULL is literally zero!
+	the variable of any pointer type can have the value of zero;
+
+
+PADDING:
+	malloc is supposed to round up to the closest multiple of 8 (word size)
+	wasted bytes are the "padding"
+
+
+mem_stark_sbrk is the beginning our our "heap"
+mem_brk is the end of the allocated area
+
+
+explicit free lists have a global variable that points to the first free block and each free block has a pointer to the next free block
+
+
+ERRORS:
+
+	mm.c: In function ‘mm_malloc’:
+	mm.c:184:5: warning: implicit declaration of function ‘find_fit’ [-Wimplicit-function-declaration]
+	     if ((bp = find_fit(asize)) != NULL) {
+	     ^
+	mm.c:184:13: warning: assignment makes pointer from integer without a cast [enabled by default]
+	     if ((bp = find_fit(asize)) != NULL) {
+	             ^
+	mm.c:185:9: warning: implicit declaration of function ‘place’ [-Wimplicit-function-declaration]
+	         place(bp, asize);
+	         ^
+	mm.c: In function ‘mm_free’:
+	mm.c:205:33: error: ‘bp’ undeclared (first use in this function)
+	     size_t size = GET_SIZE(HDRP(bp));
+	                                 ^
+	mm.c:51:35: note: in definition of macro ‘GET’
+	 #define GET(p) (*(unsigned int *)(p)) //cast p as an unsigned int pointer then follow the pointer (convert what is at address p to an unsigned int)
+	                                   ^
+	mm.c:205:19: note: in expansion of macro ‘GET_SIZE’
+	     size_t size = GET_SIZE(HDRP(bp));
+	                   ^
+	mm.c:205:28: note: in expansion of macro ‘HDRP’
+	     size_t size = GET_SIZE(HDRP(bp));
+	                            ^
+	mm.c:205:33: note: each undeclared identifier is reported only once for each function it appears in
+	     size_t size = GET_SIZE(HDRP(bp));
+	                                 ^
+	mm.c:51:35: note: in definition of macro ‘GET’
+	 #define GET(p) (*(unsigned int *)(p)) //cast p as an unsigned int pointer then follow the pointer (convert what is at address p to an unsigned int)
+	                                   ^
+	mm.c:205:19: note: in expansion of macro ‘GET_SIZE’
+	     size_t size = GET_SIZE(HDRP(bp));
+	                   ^
+	mm.c:205:28: note: in expansion of macro ‘HDRP’
+	     size_t size = GET_SIZE(HDRP(bp));
+	                            ^
+	mm.c: In function ‘mm_realloc’:
+	mm.c:224:45: error: ‘SIZE_T_SIZE’ undeclared (first use in this function)
+	     copySize = *(size_t *)((char *)oldptr - SIZE_T_SIZE);
+	                                             ^
+	mm.c: At top level:
+	mm.c:241:14: error: redefinition of ‘coalesce’
+	 static void *coalesce(void *bp)
+	              ^
+	mm.c:67:14: note: previous definition of ‘coalesce’ was here
+	 static void *coalesce(void *bp)
+	              ^
+	mm.c: In function ‘coalesce’:
+	mm.c:52:21: error: called object is not a function or function pointer
+	 #define PUT(p, val) (*(unsigned int *)(p) = (val))
+	                     ^
+	mm.c:267:53: note: in expansion of macro ‘PUT’
+	         PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0)); 37 PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
+	                                                     ^
+	mm.c: At top level:
+	mm.c:241:14: warning: ‘coalesce’ defined but not used [-Wunused-function]
+	 static void *coalesce(void *bp)
+	              ^
+	make: *** [mm.o] Error 1
